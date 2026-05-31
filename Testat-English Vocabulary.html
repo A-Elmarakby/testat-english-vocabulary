@@ -413,11 +413,11 @@
             
 
             .main-header {
-                padding: 10px 15px 6px 15px !important; /* 1. Reduce bottom padding */
+                padding: 10px 15px 6px 15px ; /* 1. Reduce bottom padding */
                 flex-direction: column; 
                 justify-content: center;
                 align-items: center;
-                gap: 2px !important; /* 2. Remove the large gap between logo and text */
+                gap: 2px ; /* 2. Remove the large gap between logo and text */
                 text-align: center; 
                 position: -webkit-sticky;
                 position: sticky;
@@ -425,15 +425,15 @@
                 z-index: 100;
             }
             .header-logo img {
-                max-height: 45px !important; /* 3. Keep original logo size untouched */
+                max-height: 45px ; /* 3. Keep original logo size untouched */
             }
             .header-marketing { 
                 text-align: center; 
                 width: 100%;
             }
             .header-marketing p {
-                font-size: 14px !important;
-                margin: 0 !important;
+                font-size: 14px ;
+                margin: 0 ;
             }
             .vocab-grid { 
                 grid-template-columns: 1fr; 
@@ -444,60 +444,60 @@
             }
             /* Mobile Sticky Toolbar */
             .sticky-toolbar-container {
-                display: flex !important; 
-                flex-direction: row !important; 
-                flex-wrap: wrap !important; 
-                gap: 8px !important;
-                padding: 10px 12px !important;
-                border-radius: 20px !important;
-                top: 100px !important; /* 4. Shifted up to fit the new compact header */
+                display: flex ; 
+                flex-direction: row ; 
+                flex-wrap: wrap ; 
+                gap: 8px ;
+                padding: 10px 12px ;
+                border-radius: 20px ;
+                top: 100px ; /* 4. Shifted up to fit the new compact header */
             }
             
 
             .speed-toolbar {
-                width: 100% !important; 
-                justify-content: center !important;
-                order: 1 !important; 
-                position: static !important; 
+                width: 100% ; 
+                justify-content: center ;
+                order: 1 ; 
+                position: static ; 
             }
 
             .search-box {
-                max-width: none !important;
-                flex: 1 1 auto !important; /* Take full available space on left */
-                order: 2 !important; /* Left side */
-                position: relative !important; /* Enable absolute for icon */
-                display: block !important;
+                max-width: none ;
+                flex: 1 1 auto ; /* Take full available space on left */
+                order: 2 ; /* Left side */
+                position: relative ; /* Enable absolute for icon */
+                display: block ;
             }
 
             .search-box input {
-                width: 100% !important;
-                padding: 10px 15px 10px 40px !important; /* Leave space for search icon */
-                box-sizing: border-box !important;
+                width: 100% ;
+                padding: 10px 15px 10px 40px ; /* Leave space for search icon */
+                box-sizing: border-box ;
             }
 
             .search-box i {
-                position: absolute !important; /* Render icon on top of input field */
-                left: 15px !important; 
-                top: 50% !important;
-                transform: translateY(-50%) !important;
-                display: block !important; 
-                color: var(--text-grey) !important;
-                font-size: 14px !important;
-                z-index: 10 !important; /* Always keep icon on top */
-                pointer-events: none !important;
-                flex-shrink: 0 !important; /* Never shrink icon to 0px */
+                position: absolute ; /* Render icon on top of input field */
+                left: 15px ; 
+                top: 50% ;
+                transform: translateY(-50%) ;
+                display: block ; 
+                color: var(--text-grey) ;
+                font-size: 14px ;
+                z-index: 10 ; /* Always keep icon on top */
+                pointer-events: none ;
+                flex-shrink: 0 ; /* Never shrink icon to 0px */
             }
 
             .global-stop-btn {
-                margin: 0 !important;
-                width: auto !important; 
-                flex: 0 0 auto !important;
-                padding: 8px 18px !important;
-                order: 3 !important; /* Right side */
+                margin: 0 ;
+                width: auto ; 
+                flex: 0 0 auto ;
+                padding: 8px 18px ;
+                order: 3 ; /* Right side */
             }
         }
         /* =========================================================
-           NEW DOWNLOAD APP SECTION CSS (ORIGINAL FROM TEST015)
+            DOWNLOAD APP SECTION CSS 
            ========================================================= */
         .new-download-section {
             padding: 50px 0;
@@ -507,6 +507,13 @@
             direction: rtl;
             font-family: Arial, sans-serif;
             box-sizing: border-box;
+            
+            /* Make the section look like a floating card */
+            max-width: 1000px;
+            width: calc(100% - 30px); /* Add safe margin for mobile screens */
+            margin: 40px auto; /* Center horizontally with vertical spacing */
+            border-radius: 30px; /* Soft rounded corners */
+            box-shadow: 0 15px 40px rgba(92, 0, 122, 0.08); /* Soft drop shadow */
         }
 
         .new-download-section * { box-sizing: border-box; }
@@ -572,7 +579,7 @@
         .store-button {
             display: flex; align-items: center; gap: 12px; padding: 16px 20px;
             background: linear-gradient(135deg, #341145 0%, #4a1860 100%); border-radius: 18px;
-            text-decoration: none; color: #ffffff !important; transition: transform 0.4s ease; flex: 1;
+            text-decoration: none; color: #ffffff ; transition: transform 0.4s ease; flex: 1;
             min-width: 180px; box-shadow: 0 8px 25px rgba(52, 17, 69, 0.25);
         }
         .store-button.app-store { background: linear-gradient(135deg, #1a1a2e 0%, #2d2d44 100%); }
@@ -588,7 +595,7 @@
         .social-links-molecular { display: flex; gap: 12px; }
         .social-orb {
             position: relative; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;
-            border-radius: 50%; text-decoration: none; color: #ffffff !important; transition: transform 0.4s ease;
+            border-radius: 50%; text-decoration: none; color: #ffffff ; transition: transform 0.4s ease;
         }
         .social-orb:nth-child(1) { background: linear-gradient(135deg, #1877f2, #4b9cff); }
         .social-orb:nth-child(2) { background: linear-gradient(135deg, #FF0000, #ff3333); }
@@ -601,6 +608,7 @@
         }
         .orbital-paths {
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 500px; height: 500px; pointer-events: none;
+            animation: spinOrbitals 40s linear infinite; /* Add rotation animation */
         }
         .orbit-ring { transform-origin: center; }
         .orbit-1 { animation: dl-orbit-rotate 30s linear infinite; }
@@ -645,20 +653,10 @@
         @keyframes dl-hexFloat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
         @keyframes dl-orbit-rotate { 0% { transform: rotate(0); } 100% { transform: rotate(360deg); } }
         @keyframes dl-phone-float { 0%, 100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-15px) rotate(1deg); } }
+        @keyframes spinOrbitals { 0% { transform: translate(-50%, -50%) rotate(0deg); } 100% { transform: translate(-50%, -50%) rotate(360deg); } }
 
 
-        /* * DOWNLOAD & SHOWCASE SECTION */
-        .new-download-section {
-            position: relative; background-color: var(--brand-dark); border-radius: 20px; overflow: hidden;
-            padding: 50px 30px; margin-top: 40px; box-shadow: 0 15px 35px rgba(44, 0, 62, 0.2); color: #ffffff; direction: rtl;
-        }
-        
-        @media (max-width: 768px) {
-            .dl-row { flex-direction: column-reverse; gap: 50px; }
-            .download-heading { font-size: 26px; }
-            .dl-features-grid { grid-template-columns: 1fr; }
-            .social-section { flex-direction: column; align-items: flex-start; }
-        }
+
 
 
         /* =========================================================
@@ -710,7 +708,7 @@
 
         /* Active highlight for playing words */
         .vocab-row.playing-highlight {
-            background-color: #fff0e6 !important;
+            background-color: #fff0e6 ;
             border-left: 4px solid var(--brand-orange);
         }
 
