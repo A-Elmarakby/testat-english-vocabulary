@@ -104,7 +104,6 @@
             align-items: center;
             justify-content: space-between;
             gap: 15px;
-            /* Darker color and shadow */
             background-color: rgba(234, 221, 240, 0.95); 
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
@@ -113,7 +112,7 @@
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); 
             position: -webkit-sticky;
             position: sticky;
-            top: 85px; 
+            top: 70px; /* PC: Reduce distance from header */
             z-index: 99;
             width: 100%;
         }
@@ -155,19 +154,11 @@
             box-shadow: 0 2px 5px rgba(255, 102, 0, 0.3);
         }
 
-        /* Search and Stop Area */
-        .search-stop-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex-grow: 1;
-            justify-content: flex-end;
-        }
-
+        /* Search Box */
         .search-box {
             position: relative;
             width: 100%;
-            max-width: 250px;
+            max-width: 280px;
             transition: all 0.3s ease;
         }
 
@@ -191,38 +182,24 @@
             font-size: 14px;
         }
 
-        /* Stop Button */
+        /* Stop Button (Centered on PC) */
         .global-stop-btn {
             background: #d32f2f;
             color: #ffffff;
             border: none;
-            padding: 10px 15px;
-            border-radius: 20px;
+            padding: 8px 20px;
+            border-radius: 30px;
             cursor: pointer;
             font-weight: bold;
             font-size: 14px;
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 6px;
             transition: all 0.3s ease;
-            box-shadow: 0 2px 5px rgba(211, 47, 47, 0.3);
+            box-shadow: 0 4px 10px rgba(211, 47, 47, 0.3);
             white-space: nowrap;
-        }
-
-        .global-stop-btn {
-            background: #d32f2f;
-            color: #ffffff;
-            border: none;
-            padding: 6px 15px;
-            border-radius: 30px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 14px;
-            margin-left: 10px;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 5px rgba(211, 47, 47, 0.3);
-            align-items: center;
-            gap: 6px;
+            margin: 0 auto; /* Center button on PC */
         }
 
         .global-stop-btn:hover {
@@ -469,30 +446,30 @@
             }
             /* Mobile Sticky Toolbar */
             .sticky-toolbar-container {
-                flex-direction: column; /* Stack items */
-                gap: 15px;
-                padding: 15px;
+                flex-direction: row; /* Align items in a row */
+                flex-wrap: wrap; /* Allow wrapping */
+                gap: 10px;
+                padding: 12px;
                 border-radius: 20px;
-                top: 105px; /* Put under header */
+                top: 75px; /* Mobile: Reduce distance from header */
             }
 
             .speed-toolbar {
-                width: 100%;
+                width: 100%; /* Speed bar on top */
                 justify-content: center;
-                position: sticky;
-                top: 87px; /* The space between the speed bar and the header */
-                z-index: 99;
-            }
-
-            .search-stop-wrapper {
-                width: 100%;
-                justify-content: space-between;
-                flex-direction: row; /* Keep search and stop next to each other */
+                order: 1; /* Position 1st */
+                position: static; 
             }
 
             .search-box {
                 max-width: none;
-                flex-grow: 1; /* Take full space when stop button is hidden */
+                flex-grow: 1; /* Take full space when stop is hidden */
+                order: 2; /* Position 2nd (Left side in LTR) */
+            }
+
+            .global-stop-btn {
+                margin: 0;
+                order: 3; /* Position 3rd (Right side in LTR) */
             }
         }
 
@@ -830,22 +807,15 @@
                 </div>
             </div>
 
-            <div class="search-stop-wrapper">
-                <button id="global-stop-btn" class="global-stop-btn" onclick="globalStop()" style="display: none;">
-                    <i class="fas fa-stop-circle"></i> Stop
-                </button>
-                
-                <div class="search-box">
-                    <i class="fas fa-search"></i>
-                    <input type="text" id="searchInput" placeholder="Search words..." onkeyup="filterWords()">
-                </div>
-            </div>
-
-        </div>
-
             <button id="global-stop-btn" class="global-stop-btn" onclick="globalStop()" style="display: none;">
                 <i class="fas fa-stop-circle"></i> إيقاف
             </button>
+            
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Search words..." onkeyup="filterWords()">
+            </div>
+
         </div>
 
         <div id="vocabulary-container"></div>
