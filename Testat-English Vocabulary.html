@@ -107,10 +107,15 @@
             -webkit-backdrop-filter: blur(12px);
             padding: 12px 20px;
             border-radius: 30px;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); 
+            /* top bar shadow */
+            box-shadow: 0 20px 40px rgba(92, 0, 122, 0.07), 0 8px 20px rgba(0, 0, 0, 0.04);
+            
+            /* Add delicate brand stroke (1px width, 8% opacity) */
+            border: 2px solid rgba(42, 0, 56, 0.08); 
+            
             position: -webkit-sticky;
             position: sticky;
-            top: 100px; /* PC:  distance from header */
+            top: 100px; /* PC: distance from header */
             z-index: 99;
             width: 100%;
         }
@@ -447,45 +452,43 @@
                 display: flex ; 
                 flex-direction: row ; 
                 flex-wrap: wrap ; 
-                gap: 8px ;
-                padding: 10px 12px ;
+                gap: 10px ;
+                padding: 12px ;
                 border-radius: 20px ;
-                top: 100px ; /* 4. Shifted up to fit the new compact header */
+                top: 100px ;
             }
-            
 
             .speed-toolbar {
                 width: 100% ; 
                 justify-content: center ;
                 order: 1 ; 
-                position: static ; 
             }
 
             .search-box {
                 max-width: none ;
-                flex: 1 1 auto ; /* Take full available space on left */
-                order: 2 ; /* Left side */
-                position: relative ; /* Enable absolute for icon */
+                flex: 1 1 0px ; /* Force search box to share space instead of wrapping */
+                order: 2 ; 
+                position: relative ;
                 display: block ;
             }
 
             .search-box input {
                 width: 100% ;
-                padding: 10px 15px 10px 40px ; /* Leave space for search icon */
+                padding: 10px 15px 10px 40px ; 
                 box-sizing: border-box ;
             }
 
             .search-box i {
-                position: absolute ; /* Render icon on top of input field */
+                position: absolute ; 
                 left: 15px ; 
                 top: 50% ;
                 transform: translateY(-50%) ;
                 display: block ; 
                 color: var(--text-grey) ;
                 font-size: 14px ;
-                z-index: 10 ; /* Always keep icon on top */
+                z-index: 10 ; 
                 pointer-events: none ;
-                flex-shrink: 0 ; /* Never shrink icon to 0px */
+                flex-shrink: 0 ; 
             }
 
             .global-stop-btn {
@@ -493,7 +496,8 @@
                 width: auto ; 
                 flex: 0 0 auto ;
                 padding: 8px 18px ;
-                order: 3 ; /* Right side */
+                order: 3 ; /* Placed securely on the right side */
+                white-space: nowrap ; /* Prevent text from breaking into two lines */
             }
         }
         /* =========================================================
@@ -1178,6 +1182,18 @@
                     row.style.display = "none";
                 }
             });
+
+            // Smart UX: Auto-scroll to vocabulary list if searching while scrolled down
+            if (query.length > 0) {
+                const container = document.getElementById('vocabulary-container');
+                // Check if user is staring at empty space below the list
+                if (window.scrollY > container.offsetTop - 150) {
+                    window.scrollTo({
+                        top: container.offsetTop - 150,
+                        behavior: 'smooth'
+                    });
+                }
+            }
         }
 
         function renderLesson() {
