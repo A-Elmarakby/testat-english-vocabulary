@@ -33,7 +33,7 @@
          */
         :root {
             --brand-purple: #5c007a;
-            --brand-dark: #2c003e;
+            --brand-dark: #38014e;
             --brand-orange: #ff6600;
             --bg-gradient-start: #f6e8fa;
             --bg-gradient-end: #ffebe0;
@@ -451,25 +451,37 @@
                 gap: 10px;
                 padding: 12px;
                 border-radius: 20px;
-                top: 75px; /* Mobile: Reduce distance from header */
+                top: 95px; /* 1. Keep a small gap between header and bar */
             }
 
             .speed-toolbar {
-                width: 100%; /* Speed bar on top */
+                width: 100%; 
                 justify-content: center;
-                order: 1; /* Position 1st */
+                order: 1; 
                 position: static; 
             }
 
             .search-box {
                 max-width: none;
-                flex-grow: 1; /* Take full space when stop is hidden */
-                order: 2; /* Position 2nd (Left side in LTR) */
+                width: auto; /* 2. Fix width so stop button stays on the same line */
+                flex: 1 1 auto; /* Take available space */
+                order: 2; /* Search on the left */
+            }
+
+            .search-box input {
+                padding-left: 35px; /* 3. Keep space for the search icon */
+            }
+
+            .search-box i {
+                display: block; /* Force icon to show */
+                z-index: 5;
             }
 
             .global-stop-btn {
                 margin: 0;
-                order: 3; /* Position 3rd (Right side in LTR) */
+                width: auto; /* Prevent taking full width */
+                flex: 0 0 auto; 
+                order: 3; /* Stop on the right */
             }
         }
 
