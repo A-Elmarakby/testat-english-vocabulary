@@ -1097,28 +1097,6 @@
             });
         }
 
-        // Show/Hide Global Stop Button
-        function showGlobalStop() {
-            document.getElementById('global-stop-btn').style.display = 'flex';
-        }
-        function hideGlobalStop() {
-            document.getElementById('global-stop-btn').style.display = 'none';
-        }
-        
-        // Global Stop Action
-        function globalStop() {
-            window.speechSynthesis.cancel();
-            document.querySelectorAll('.playing-highlight').forEach(el => el.classList.remove('playing-highlight'));
-            hideGlobalStop();
-            
-            // إرجاع كل أزرار "إيقاف" الخاصة بالأقسام إلى وضعها الطبيعي
-            document.querySelectorAll('.play-all-btn').forEach((btn, index) => {
-                btn.innerHTML = `<i class="fas fa-play"></i> استمع للكل`;
-                btn.style.background = "var(--brand-orange)";
-                btn.onclick = () => playSection(index, btn);
-            });
-        }
-
         // Modified speakWord to handle row highlighting
         // Show stop button
         function showGlobalStop() {
