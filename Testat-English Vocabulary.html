@@ -263,33 +263,48 @@
             fill: currentColor;
         }
 
-        /* * LESSON INFO CARD STYLES */
-        .lesson-info-card {
-            background: linear-gradient(135deg, var(--brand-purple), var(--brand-dark));
+        /* * LESSON INFO CARDS */
+        .lesson-info-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            
+            gap: 15px;
+        }
+
+        .info-card {
             border-radius: 15px;
             padding: 20px 25px;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            flex-direction: column;
             color: white;
-            box-shadow: 0 8px 20px rgba(92, 0, 122, 0.2);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            text-align: left; 
+            direction: ltr; 
+        }
+
+        .unit-card {
+            background: linear-gradient(135deg, var(--brand-dark), var(--brand-purple) );
             border-bottom: 4px solid var(--brand-orange);
         }
 
-        .lesson-info-card .label {
-            font-size: 14px;
-            color: #f0e6f5;
-            display: block;
-            margin-bottom: 3px;
+        .lesson-card {
+            background: linear-gradient(135deg, var(--brand-orange), #ff8533 );
+            border-bottom: 4px solid var(--brand-dark);
+        
         }
 
-        .lesson-info-card .title {
-            font-size: 20px;
-            font-weight: bold;
-            color: var(--brand-orange);
+        .info-card .label {
+            font-size: 18px; /* Unit and Lesson Size */
+            font-weight: 600; 
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 5px;
         }
-        
-        .lesson-details { text-align: right; }
+
+        .info-card .title {
+            font-size: 24px; /* Values & Identity Size*/
+            font-weight: bold;
+            color: #ffffff;
+        }
 
         /* * FOOTER STYLES */
         .main-footer {
@@ -327,6 +342,25 @@
 
         /* * RESPONSIVE DESIGN (Mobile)  */
         @media (max-width: 768px) {
+            /* Force cards to stack vertically on mobile */
+            .lesson-info-wrapper {
+                grid-template-columns: 1fr; 
+                gap: 12px; /* Smaller gap */
+            }
+            .info-card {
+                text-align: center; /* Center the text inside the cards on mobile */
+                padding: 12px 15px; /* Smaller padding */
+            }
+
+            .info-card .label {
+                font-size: 14px; /* Smaller label font */
+                margin-bottom: 2px;
+            }
+            .info-card .title {
+                font-size: 18px; /* Smaller title font */
+            }
+            
+
             .main-header {
                 padding: 15px 15px;
                 flex-direction: column; 
@@ -671,12 +705,12 @@
 
     <main class="app-container" id="app-content">
         
-        <div class="lesson-info-card">
-            <div class="unit-details">
+        <div class="lesson-info-wrapper">
+            <div class="info-card unit-card">
                 <span class="label">Unit 1:</span>
                 <span class="title">Self-Discovery</span>
             </div>
-            <div class="lesson-details">
+            <div class="info-card lesson-card">
                 <span class="label">Lesson 1:</span>
                 <span class="title">Values & Identity</span>
             </div>
