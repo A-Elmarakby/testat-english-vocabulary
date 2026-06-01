@@ -162,31 +162,19 @@
         .search-box {
             position: relative;
             width: 100%;
-            max-width: 260px;
+            max-width: 280px;
             transition: all 0.3s ease;
         }
 
         .search-box input {
             width: 100%;
-            padding: 9px 16px 9px 36px;
-            background: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 25px;
-            font-family: 'Tajawal', sans-serif;
-            font-size: 13px;
+            padding: 10px 15px 10px 35px;
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            font-family: inherit;
+            font-size: 14px;
             outline: none;
             box-sizing: border-box;
-            color: #470761;
-            transition: border-color 0.25s ease, box-shadow 0.25s ease;
-        }
-
-        .search-box input::placeholder {
-            color: #5b007a73;
-        }
-
-        .search-box input:focus {
-            border-color: rgba(255, 102, 0, 0.5);
-            box-shadow: 0 0 0 3px rgba(255, 102, 0, 0.15);
         }
 
         .search-box i {
@@ -194,8 +182,8 @@
             left: 12px;
             top: 50%;
             transform: translateY(-50%);
-            color: #5c007a;
-            font-size: 13px;
+            color: var(--text-grey);
+            font-size: 14px;
         }
 
         /* Stop Button (Centered on PC) */
@@ -504,7 +492,6 @@
                 order: 1 ; 
             }
 
-            /* Mobile Search Box styling */
             .search-box {
                 max-width: none ;
                 flex: 1 1 0px ; /* Force search box to share space instead of wrapping */
