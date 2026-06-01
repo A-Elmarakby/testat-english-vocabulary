@@ -1198,18 +1198,33 @@
         function filterWords() {
             const query = document.getElementById('searchInput').value.toLowerCase();
             const rows = document.querySelectorAll('.vocab-row');
+            let visibleCount = 0;
             
             rows.forEach(row => {
                 const enText = row.querySelector('.en-text').innerText.toLowerCase();
                 const arText = row.querySelector('.ar-text').innerText.toLowerCase();
-                
                 // Show or hide row
                 if (enText.includes(query) || arText.includes(query)) {
                     row.style.display = "flex";
+                    visibleCount++;
                 } else {
                     row.style.display = "none";
                 }
             });
+
+            let noResults = document.getElementById('no-results-msg');
+            if (!noResults) {
+                noResults = document.createElement('div');
+                noResults.id = 'no-results-msg';
+                noResults.className = 'no-results-msg';
+                document.getElementById('vocabulary-container').appendChild(noResults);
+            }
+            if (query.length > 0 && visibleCount === 0) {
+                noResults.innerHTML = '<i class="fas fa-search"></i>لا توجد نتائج لـ "' + query + '"';
+                noResults.style.display = 'block';
+            } else {
+                noResults.style.display = 'none';
+            }
 
             // Smart UX: Auto-scroll to vocabulary list if searching while scrolled down
             if (query.length > 0) {
