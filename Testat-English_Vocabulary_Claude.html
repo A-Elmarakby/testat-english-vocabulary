@@ -363,68 +363,589 @@
             color: #ffffff;
         }
 
-        /* * FOOTER STYLES */
-        .main-footer {
-            background: var(--brand-dark);
-            padding: 25px 20px;
-            color: white;
-            text-align: center;
+        /* =========================================================
+           CTA SECTION
+           ========================================================= */
+        .cta-section {
+            background: #1e0030;
+            position: relative;
+            overflow: hidden;
+            margin-top: 0;
         }
 
-        .footer-content {
+        /* Animated star particles */
+        .cta-stars {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .cta-star {
+            position: absolute;
+            background: #fff;
+            border-radius: 50%;
+            animation: starTwinkle var(--d, 3s) ease-in-out infinite var(--delay, 0s);
+            opacity: 0;
+        }
+
+        @keyframes starTwinkle {
+            0%, 100% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: var(--max-opacity, 0.6); transform: scale(1); }
+        }
+
+        /* Orange radial glow behind phone */
+        .cta-glow-right {
+            position: absolute;
+            right: -60px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(255,102,0,0.18) 0%, transparent 65%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .cta-glow-left {
+            position: absolute;
+            left: -100px;
+            bottom: -100px;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(92,0,122,0.35) 0%, transparent 65%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .cta-inner {
             max-width: 1000px;
             margin: 0 auto;
+            padding: 70px 30px 60px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Left text column */
+        .cta-text-col {
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+        }
+
+        .cta-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,102,0,0.12);
+            border: 1px solid rgba(255,102,0,0.35);
+            color: #ff8533;
+            font-size: 13px;
+            font-weight: 700;
+            padding: 7px 16px;
+            border-radius: 40px;
+            width: fit-content;
+            direction: rtl;
+            letter-spacing: 0.03em;
+            animation: cta-badge-pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes cta-badge-pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(255,102,0,0); }
+            50% { box-shadow: 0 0 0 6px rgba(255,102,0,0.08); }
+        }
+
+        .cta-headline {
+            font-size: 42px;
+            font-weight: 900;
+            color: #ffffff;
+            line-height: 1.2;
+            direction: rtl;
+            margin: 0;
+        }
+
+        .cta-headline .hl-orange { color: #ff6600; }
+        .cta-headline .hl-purple { color: #c97be8; }
+
+        .cta-sub {
+            font-size: 16px;
+            color: rgba(255,255,255,0.55);
+            line-height: 1.75;
+            direction: rtl;
+            margin: 0;
+        }
+
+        /* Inline stats strip */
+        .cta-stats {
+            display: flex;
+            gap: 28px;
+            direction: rtl;
+            flex-wrap: wrap;
+        }
+
+        .cta-stat {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .cta-stat-num {
+            font-size: 26px;
+            font-weight: 900;
+            color: #ff6600;
+            line-height: 1;
+        }
+
+        .cta-stat-label {
+            font-size: 11px;
+            color: rgba(255,255,255,0.45);
+            font-weight: 500;
+        }
+
+        .cta-stat-divider {
+            width: 1px;
+            height: 36px;
+            background: rgba(255,255,255,0.1);
+            align-self: center;
+        }
+
+        /* Store buttons */
+        .cta-store-btns {
+            display: flex;
+            gap: 12px;
+            direction: rtl;
+            flex-wrap: wrap;
+        }
+
+        .cta-store-btn {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            padding: 13px 20px;
+            border-radius: 14px;
+            text-decoration: none;
+            color: #fff;
+            font-family: inherit;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            min-width: 155px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .cta-store-btn.gplay {
+            background: linear-gradient(135deg, #341145, #4e1a6a);
+            box-shadow: 0 8px 24px rgba(92,0,122,0.4);
+        }
+
+        .cta-store-btn.astore {
+            background: linear-gradient(135deg, #141428, #2a2a45);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+        }
+
+        .cta-store-btn.huawei {
+            background: linear-gradient(135deg, #b82828, #d94040);
+            box-shadow: 0 8px 24px rgba(180,40,40,0.4);
+        }
+
+        .cta-store-btn:hover {
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: 0 14px 32px rgba(0,0,0,0.5);
+        }
+
+        .cta-store-btn i { font-size: 28px; flex-shrink: 0; }
+
+        .cta-btn-text { display: flex; flex-direction: column; text-align: left; }
+        .cta-btn-text .small { font-size: 11px; opacity: 0.75; }
+        .cta-btn-text strong { font-size: 15px; font-weight: 700; }
+
+        /* Right phone column */
+        .cta-phone-col {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            min-height: 480px;
+        }
+
+        /* Spinning orbit rings */
+        .cta-orbit-svg {
+            position: absolute;
+            width: 420px;
+            height: 420px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+
+        .cta-orbit-ring-1 { animation: orbitSpin1 28s linear infinite; transform-origin: 210px 210px; }
+        .cta-orbit-ring-2 { animation: orbitSpin2 20s linear infinite; transform-origin: 210px 210px; }
+        .cta-orbit-ring-3 { animation: orbitSpin3 35s linear infinite; transform-origin: 210px 210px; }
+
+        @keyframes orbitSpin1 { to { transform: rotate(360deg); } }
+        @keyframes orbitSpin2 { to { transform: rotate(-360deg); } }
+        @keyframes orbitSpin3 { to { transform: rotate(360deg); } }
+
+        /* Floating dots on orbits */
+        .cta-orbit-dot {
+            r: 5;
+            fill: #ff6600;
+            filter: drop-shadow(0 0 4px rgba(255,102,0,0.8));
+        }
+
+        .cta-orbit-dot-purple {
+            r: 4;
+            fill: #c97be8;
+            filter: drop-shadow(0 0 4px rgba(201,123,232,0.7));
+        }
+
+        /* Phone mockup */
+        .cta-phone-wrap {
+            position: relative;
+            z-index: 5;
+            animation: phoneBob 5s ease-in-out infinite;
+        }
+
+        @keyframes phoneBob {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-14px) rotate(1.5deg); }
+        }
+
+        .cta-phone-frame {
+            width: 230px;
+            height: 460px;
+            background: linear-gradient(160deg, #1a0028, #2d0045);
+            border-radius: 40px;
+            padding: 12px;
+            border: 1.5px solid rgba(255,255,255,0.12);
+            box-shadow:
+                0 0 0 1px rgba(255,255,255,0.04),
+                0 30px 70px rgba(0,0,0,0.7),
+                0 0 60px rgba(92,0,122,0.3),
+                inset 0 1px 0 rgba(255,255,255,0.08);
+            position: relative;
+        }
+
+        .cta-phone-notch {
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90px;
+            height: 22px;
+            background: #0a0014;
+            border-radius: 0 0 14px 14px;
+            z-index: 10;
+        }
+
+        .cta-phone-screen {
+            width: 100%;
+            height: 100%;
+            background: #0d001a;
+            border-radius: 30px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Simulated app screen inside phone */
+        .cta-app-topbar {
+            background: #5c007a;
+            padding: 28px 14px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid #ff6600;
+        }
+
+        .cta-app-topbar-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: #fff;
+            direction: rtl;
+        }
+
+        .cta-app-topbar-sub {
+            font-size: 9px;
+            color: rgba(255,255,255,0.6);
+            direction: rtl;
+        }
+
+        .cta-app-score-badge {
+            background: #ff6600;
+            color: #fff;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+
+        .cta-app-body {
+            flex: 1;
+            padding: 12px 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+            overflow: hidden;
+            background: #0d001a;
+        }
+
+        .cta-app-word-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-        }
-
-        .footer-content p { margin: 0; font-size: 15px; }
-
-        .cta-button {
-            background: var(--brand-orange);
-            color: white;
-            padding: 10px 20px;
+            padding: 8px 10px;
+            background: rgba(255,255,255,0.04);
             border-radius: 8px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: 0.3s;
+            border: 1px solid rgba(255,255,255,0.05);
         }
 
-        .cta-button:hover {
-            background: #ff8533;
+        .cta-app-word-row.active-row {
+            background: rgba(255,102,0,0.12);
+            border-color: rgba(255,102,0,0.35);
+            border-left: 3px solid #ff6600;
+        }
+
+        .cta-app-en {
+            font-size: 10px;
+            font-weight: 700;
+            color: #e0c8f0;
+        }
+
+        .cta-app-ar {
+            font-size: 9px;
+            color: rgba(255,255,255,0.5);
+            direction: rtl;
+        }
+
+        .cta-app-speaker {
+            width: 20px;
+            height: 20px;
+            background: rgba(92,0,122,0.5);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin: 0 4px;
+        }
+
+        .cta-app-speaker i {
+            font-size: 9px;
+            color: #c97be8;
+        }
+
+        .cta-app-play-btn {
+            background: linear-gradient(135deg, #ff6600, #ff8533);
+            color: #fff;
+            font-size: 9px;
+            font-weight: 700;
+            padding: 6px 12px;
+            border-radius: 20px;
+            margin: 8px 10px 4px;
+            text-align: center;
+            direction: rtl;
+            box-shadow: 0 4px 12px rgba(255,102,0,0.4);
+        }
+
+        /* Social icons on phone col */
+        .cta-social-row {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            z-index: 6;
+        }
+
+        .cta-social-orb {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 16px;
+            text-decoration: none;
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.15);
+        }
+
+        .cta-social-orb:hover { transform: translateY(-4px) scale(1.1); }
+        .cta-social-orb.fb { background: linear-gradient(135deg, #1565c0, #1877f2); }
+        .cta-social-orb.yt { background: linear-gradient(135deg, #c62828, #e53935); }
+        .cta-social-orb.ig { background: linear-gradient(135deg, #c2185b, #e91e8c); }
+
+        /* =========================================================
+           FOOTER SECTION
+           ========================================================= */
+        .main-footer {
+            background: #100018;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .footer-inner {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 30px 28px;
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .footer-brand-name {
+            font-size: 20px;
+            font-weight: 900;
+            color: #fff;
+            letter-spacing: -0.02em;
+        }
+
+        .footer-brand-name span { color: #ff6600; }
+
+        .footer-brand-tag {
+            font-size: 11px;
+            color: rgba(255,255,255,0.35);
+            direction: rtl;
+        }
+
+        .footer-links-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links-row a {
+            font-size: 12px;
+            color: rgba(255,255,255,0.4);
+            text-decoration: none;
+            padding: 4px 10px;
+            border-radius: 20px;
+            transition: color 0.2s, background 0.2s;
+        }
+
+        .footer-links-row a:hover {
+            color: rgba(255,255,255,0.85);
+            background: rgba(255,255,255,0.06);
+        }
+
+        .footer-links-row .dot {
+            color: rgba(255,255,255,0.15);
+            font-size: 10px;
+        }
+
+        .footer-right {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 8px;
+        }
+
+        .footer-copy {
+            font-size: 11px;
+            color: rgba(255,255,255,0.25);
+            direction: rtl;
+            text-align: right;
+        }
+
+        .footer-social-mini {
+            display: flex;
+            gap: 8px;
+        }
+
+        .footer-social-mini a {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255,255,255,0.45);
+            font-size: 12px;
+            text-decoration: none;
+            transition: all 0.25s ease;
+        }
+
+        .footer-social-mini a:hover {
+            background: #ff6600;
+            border-color: #ff6600;
+            color: #fff;
             transform: translateY(-2px);
+        }
+
+        .footer-bottom-bar {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 30px 24px;
+            border-top: 1px solid rgba(255,255,255,0.04);
+            padding-top: 18px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .footer-bottom-text {
+            font-size: 11px;
+            color: rgba(255,255,255,0.15);
+            direction: rtl;
+            text-align: center;
+        }
+
+        /* ── CTA Mobile ── */
+        @media (max-width: 768px) {
+            .cta-inner {
+                grid-template-columns: 1fr;
+                padding: 48px 20px 40px;
+                gap: 36px;
+                text-align: center;
+            }
+
+            .cta-text-col { align-items: center; }
+
+            .cta-headline { font-size: 30px; }
+            .cta-sub { font-size: 14px; }
+
+            .cta-stats { justify-content: center; }
+
+            .cta-store-btns { justify-content: center; }
+
+            .cta-phone-col { display: none; }
+
+            /* Footer mobile */
+            .footer-inner {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 20px;
+                padding: 32px 20px 20px;
+            }
+
+            .footer-brand { align-items: center; }
+
+            .footer-right {
+                align-items: center;
+            }
+
+            .footer-copy { text-align: center; }
         }
 
 
         /* * RESPONSIVE DESIGN (Mobile)  */
-        /* No Results Message */
-        .no-results-msg {
-            text-align: center;
-            padding: 40px 20px;
-            color: var(--text-grey);
-            font-size: 18px;
-            font-weight: bold;
-            display: none;
-            direction: rtl;
-        }
-        .no-results-msg i {
-            font-size: 40px;
-            display: block;
-            margin-bottom: 15px;
-            color: #d1c4e9;
-        }
-        /* Word Counter */
-        .word-count-badge {
-            font-size: 12px;
-            background: rgba(255, 255, 255, 0.2);
-            color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 20px;
-            padding: 3px 10px;
-            margin-top: 5px;
-            display: inline-block;
-        }
         @media (max-width: 768px) {
             /* Force cards to stack vertically on mobile */
             .lesson-info-wrapper {
@@ -937,12 +1458,224 @@
         </section>
     </main>
 
-    <footer class="main-footer" dir="rtl">
-        <div class="footer-content">
-            <p>جميع الحقوق محفوظة لمركز وتطبيق <strong>تستات</strong> &copy; 2026</p>
-            <a href="https://testat-app.com/" class="cta-button">تفضل بزيارة موقعنا</a>
+    <!-- ══════════ CTA SECTION ══════════ -->
+    <section class="cta-section">
+
+        <!-- Starfield -->
+        <div class="cta-stars" id="cta-stars"></div>
+
+        <!-- Glows -->
+        <div class="cta-glow-right"></div>
+        <div class="cta-glow-left"></div>
+
+        <div class="cta-inner">
+
+            <!-- TEXT COLUMN -->
+            <div class="cta-text-col">
+
+                <div class="cta-eyebrow">
+                    <svg width="14" height="14" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                        <path d="M10 2L12.5 7.5L18 8.5L14 13L15 18.5L10 16L5 18.5L6 13L2 8.5L7.5 7.5L10 2Z" fill="#ff8533"/>
+                    </svg>
+                    ابدأ رحلتك التعليمية
+                </div>
+
+                <h2 class="cta-headline">
+                    جاهز تختبر<br>
+                    <span class="hl-orange">نفسك</span> بـ<span class="hl-purple">تستات</span>؟
+                </h2>
+
+                <p class="cta-sub">
+                    حوّل مذاكرتك لاختبارات تفاعلية، تصحيح فوري، وتتبع تقدمك — في أي وقت ومن أي مكان.
+                </p>
+
+                <!-- Stats -->
+                <div class="cta-stats">
+                    <div class="cta-stat">
+                        <span class="cta-stat-num">+1M</span>
+                        <span class="cta-stat-label">طالب مستخدم</span>
+                    </div>
+                    <div class="cta-stat-divider"></div>
+                    <div class="cta-stat">
+                        <span class="cta-stat-num">آلاف</span>
+                        <span class="cta-stat-label">سؤال تفاعلي</span>
+                    </div>
+                    <div class="cta-stat-divider"></div>
+                    <div class="cta-stat">
+                        <span class="cta-stat-num">مجاناً</span>
+                        <span class="cta-stat-label">التحميل مجاني</span>
+                    </div>
+                </div>
+
+                <!-- Store buttons -->
+                <div class="cta-store-btns">
+                    <a href="https://play.google.com/store/apps/details?id=co.itplus.testatapp" target="_blank" class="cta-store-btn gplay">
+                        <i class="fab fa-google-play"></i>
+                        <div class="cta-btn-text">
+                            <span class="small">متوفر على</span>
+                            <strong>Google Play</strong>
+                        </div>
+                    </a>
+                    <a href="https://apps.apple.com/sa/app/testat/id1640011962" target="_blank" class="cta-store-btn astore">
+                        <i class="fab fa-apple"></i>
+                        <div class="cta-btn-text">
+                            <span class="small">متوفر على</span>
+                            <strong>App Store</strong>
+                        </div>
+                    </a>
+                    <a href="https://appgallery.huawei.com/app/C107001283" target="_blank" class="cta-store-btn huawei">
+                        <i class="fas fa-mobile-alt"></i>
+                        <div class="cta-btn-text">
+                            <span class="small">متوفر على</span>
+                            <strong>AppGallery</strong>
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+
+            <!-- PHONE COLUMN (desktop only) -->
+            <div class="cta-phone-col">
+
+                <!-- Orbit rings SVG -->
+                <svg viewBox="0 0 420 420" class="cta-orbit-svg" aria-hidden="true">
+                    <g class="cta-orbit-ring-1">
+                        <circle cx="210" cy="210" r="180" fill="none" stroke="rgba(255,102,0,0.25)" stroke-width="1.5" stroke-dasharray="6,9"/>
+                        <circle class="cta-orbit-dot" cx="390" cy="210"/>
+                    </g>
+                    <g class="cta-orbit-ring-2">
+                        <circle cx="210" cy="210" r="145" fill="none" stroke="rgba(201,123,232,0.22)" stroke-width="1.5" stroke-dasharray="4,8"/>
+                        <circle class="cta-orbit-dot-purple" cx="355" cy="210"/>
+                    </g>
+                    <g class="cta-orbit-ring-3">
+                        <circle cx="210" cy="210" r="110" fill="none" stroke="rgba(255,102,0,0.18)" stroke-width="1" stroke-dasharray="4,7"/>
+                        <circle class="cta-orbit-dot" cx="320" cy="210" r="3.5"/>
+                    </g>
+                </svg>
+
+                <!-- Phone mockup -->
+                <div class="cta-phone-wrap">
+                    <div class="cta-phone-frame">
+                        <div class="cta-phone-notch"></div>
+                        <div class="cta-phone-screen">
+
+                            <div class="cta-app-topbar">
+                                <div>
+                                    <div class="cta-app-topbar-title">الوحدة 1 · المفردات</div>
+                                    <div class="cta-app-topbar-sub">Values & Identity</div>
+                                </div>
+                                <div class="cta-app-score-badge">45 كلمة</div>
+                            </div>
+
+                            <div class="cta-app-body">
+                                <div class="cta-app-word-row active-row">
+                                    <span class="cta-app-en">confidence</span>
+                                    <div class="cta-app-speaker"><i class="fas fa-volume-up"></i></div>
+                                    <span class="cta-app-ar">ثقة</span>
+                                </div>
+                                <div class="cta-app-word-row">
+                                    <span class="cta-app-en">identity</span>
+                                    <div class="cta-app-speaker"><i class="fas fa-volume-up"></i></div>
+                                    <span class="cta-app-ar">هوية</span>
+                                </div>
+                                <div class="cta-app-word-row">
+                                    <span class="cta-app-en">strengths</span>
+                                    <div class="cta-app-speaker"><i class="fas fa-volume-up"></i></div>
+                                    <span class="cta-app-ar">نقاط القوة</span>
+                                </div>
+                                <div class="cta-app-word-row">
+                                    <span class="cta-app-en">character</span>
+                                    <div class="cta-app-speaker"><i class="fas fa-volume-up"></i></div>
+                                    <span class="cta-app-ar">شخصية</span>
+                                </div>
+                                <div class="cta-app-word-row">
+                                    <span class="cta-app-en">kindness</span>
+                                    <div class="cta-app-speaker"><i class="fas fa-volume-up"></i></div>
+                                    <span class="cta-app-ar">العطف</span>
+                                </div>
+                            </div>
+
+                            <div class="cta-app-play-btn">
+                                <i class="fas fa-play" style="margin-left:5px; font-size:8px;"></i>
+                                استمع للكل
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Social orbs below phone -->
+                <div class="cta-social-row">
+                    <a href="https://www.facebook.com/testatapp" target="_blank" class="cta-social-orb fb" title="Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="http://youtube.com/@testatapp" target="_blank" class="cta-social-orb yt" title="YouTube">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                    <a href="https://www.instagram.com/testat_app/" target="_blank" class="cta-social-orb ig" title="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ══════════ FOOTER ══════════ -->
+    <footer class="main-footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <div class="footer-brand-name">تستات <span>Testat</span></div>
+                <div class="footer-brand-tag">تجربة تعليمية علمية متكاملة</div>
+            </div>
+
+            <div class="footer-links-row">
+                <a href="https://testat-app.com/" target="_blank">الموقع الرسمي</a>
+                <span class="dot">·</span>
+                <a href="#">سياسة الخصوصية</a>
+                <span class="dot">·</span>
+                <a href="#">الشروط والأحكام</a>
+                <span class="dot">·</span>
+                <a href="#">اتصل بنا</a>
+            </div>
+
+            <div class="footer-right">
+                <div class="footer-social-mini">
+                    <a href="https://www.facebook.com/testatapp" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="http://youtube.com/@testatapp" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
+                    <a href="https://www.instagram.com/testat_app/" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+                <div class="footer-copy">جميع الحقوق محفوظة &copy; 2026</div>
+            </div>
+        </div>
+
+        <div class="footer-bottom-bar">
+            <p class="footer-bottom-text">صُنع بـ ❤️ لكل طالب يسعى للتميز &mdash; تستات، رفيقك في رحلة التعلم</p>
         </div>
     </footer>
+
+    <script>
+        /* Generate random star particles for CTA */
+        (function() {
+            const container = document.getElementById('cta-stars');
+            if (!container) return;
+            for (let i = 0; i < 55; i++) {
+                const star = document.createElement('div');
+                star.className = 'cta-star';
+                const size = Math.random() * 2.5 + 0.8;
+                star.style.cssText = `
+                    width:${size}px; height:${size}px;
+                    top:${Math.random()*100}%;
+                    left:${Math.random()*100}%;
+                    --d:${(Math.random()*3+2).toFixed(1)}s;
+                    --delay:-${(Math.random()*4).toFixed(1)}s;
+                    --max-opacity:${(Math.random()*0.5+0.2).toFixed(2)};
+                `;
+                container.appendChild(star);
+            }
+        })();
+    </script>
 
     <script>
         /**
