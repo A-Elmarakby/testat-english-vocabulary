@@ -621,19 +621,18 @@
                 text-align: center;
                 align-items: center;
             }
-            /* Stack definitions vertically on mobile screens */
-            .def-bottom-floor {
+            
+            /* Stack definition layouts vertically on mobile screens */
+            .def-top-floor, .def-bottom-floor {
                 flex-direction: column;
-                align-items: flex-start;
-                gap: 12px;
-                border-right: 3px solid var(--brand-purple); /* Keep border on mobile */
+                align-items: stretch;
+                gap: 16px;
             }
-            .def-ar-wrapper {
-                width: 100%;
-                justify-content: space-between;
-                flex-direction: row-reverse; /* Icon on left, text on right */
-            }
-            .def-en-text { text-align: left !important; }
+            
+            /* Align texts and icons correctly on mobile */
+            .def-top-floor .ar-text { text-align: right; width: 100%; }
+            .def-en-text { text-align: left !important; width: 100%; }
+            .def-ar-wrapper { width: 100%; justify-content: space-between; flex-direction: row-reverse; }
             .def-ar-text { text-align: right !important; }
         }
 
@@ -692,26 +691,27 @@
             box-shadow: inset 3px 0 0 var(--brand-orange), 0 12px 30px rgba(255, 102, 0, 0.15);
         }
 
-        /* Top floor alignment */
-        .def-top-floor {
+        /* Fluid Flex Layout for Cards (Allows natural expansion) */
+        .def-top-floor, .def-bottom-floor {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-start;
+            gap: 15px;
         }
 
-        /* Center audio button and word together */
-        .def-top-floor .word-audio-wrapper {
-            width: auto;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-        
-        /* Center badge and word text */
+        /* Group badge, word, and icon together */
         .word-with-badge {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             gap: 12px;
+            flex: 1;
+        }
+
+        .word-audio-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
         /* Number badge styles (Square shape) */
@@ -732,19 +732,30 @@
             align-items: center;
             justify-content: center;
             line-height: 1;
-            flex-shrink: 0; /* Prevent the square from shrinking */
+            flex-shrink: 0; 
+            margin-top: -2px; /* Optical alignment */
         }
 
+        /* Text styling with word-wrap to prevent overflow */
         .def-top-floor .en-text {
             color: var(--def-word-color);
             font-size: var(--def-word-size);
             font-weight: bold;
+            word-break: break-word;
+            overflow-wrap: break-word;
+            line-height: 1.4;
         }
 
         .def-top-floor .ar-text {
             color: var(--def-trans-color);
             font-size: var(--def-trans-size);
             font-weight: 600;
+            text-align: right;
+            word-break: break-word;
+            overflow-wrap: break-word;
+            flex: 1;
+            line-height: 1.4;
+            padding-top: 3px;
         }
 
         /* Bottom floor definition box */
@@ -752,12 +763,23 @@
             background-color: #f8f5fb; 
             border-radius: 8px;
             padding: 16px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 20px;
             border: none;
             border-right: 4px solid var(--brand-purple); 
+            transition: all 0.3s ease;
+            cursor: pointer; /* Indicates it's clickable */
+        }
+
+        /* Hover effect for definition box */
+        .def-bottom-floor:hover {
+            background-color: #f1e6f5;
+        }
+
+        /* Active highlight specifically for definition box (Persists while playing) */
+        .def-bottom-floor.def-playing-highlight {
+            background-color: #fffcf8;
+            box-shadow: inset 3px 0 0 var(--brand-orange), 0 8px 20px rgba(255, 102, 0, 0.15);
+            border-right: 4px solid var(--brand-orange);
+            transform: scale(1.02); /* Simulates sustained hover lift */
         }
 
         .def-en-text {
@@ -765,17 +787,19 @@
             color: #666666;
             font-size: var(--def-en-size);
             font-style: italic; 
-            flex: 1;
+            text-align: left;
             line-height: 1.6;
+            flex: 1;
+            word-break: break-word;
+            overflow-wrap: break-word;
         }
-
-        /* Align text and audio icon in definition box */
+        
         .def-ar-wrapper {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
+            justify-content: flex-end;
             gap: 12px;
             flex: 1;
-            justify-content: flex-end;
         }
 
         .def-ar-text {
@@ -786,6 +810,8 @@
             font-size: var(--def-ar-size);
             font-weight: 600;
             line-height: 1.6;
+            word-break: break-word;
+            overflow-wrap: break-word;
         }
 
         /* Mini audio button */
@@ -1840,6 +1866,7 @@
         function globalStop() {
             window.speechSynthesis.cancel();
             document.querySelectorAll('.playing-highlight').forEach(el => el.classList.remove('playing-highlight'));
+            document.querySelectorAll('.def-playing-highlight').forEach(el => el.classList.remove('def-playing-highlight'));
             hideGlobalStop();
             
             // Reset play all buttons
@@ -1855,7 +1882,9 @@
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
                 
+                // Clear both word and definition highlights when a new word is clicked
                 document.querySelectorAll('.playing-highlight').forEach(el => el.classList.remove('playing-highlight'));
+                document.querySelectorAll('.def-playing-highlight').forEach(el => el.classList.remove('def-playing-highlight'));
 
                 const utterance = new SpeechSynthesisUtterance(text);
                 utterance.lang = 'en-US';
@@ -1885,12 +1914,47 @@
             }
         }
 
+        // Play definition specific highlight
+        function speakDef(text, boxId) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                document.querySelectorAll('.def-playing-highlight').forEach(el => el.classList.remove('def-playing-highlight'));
+                document.querySelectorAll('.playing-highlight').forEach(el => el.classList.remove('playing-highlight'));
+
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-US';
+                utterance.rate = currentSpeechRate;
+                
+                utterance.onstart = () => {
+                    showGlobalStop();
+                    if (boxId) {
+                        const boxEl = document.getElementById(boxId);
+                        if (boxEl) boxEl.classList.add('def-playing-highlight');
+                    }
+                };
+                
+                utterance.onend = () => {
+                    hideGlobalStop();
+                    if (boxId) {
+                        const boxEl = document.getElementById(boxId);
+                        if (boxEl) boxEl.classList.remove('def-playing-highlight');
+                    }
+                };
+                
+                utterance.onerror = () => hideGlobalStop();
+                
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
         // Play all words in a section
         function playSection(sectionIndex, btnElement) {
             if (!('speechSynthesis' in window)) return;
             
             window.speechSynthesis.cancel();
+            // Clear all highlights before starting play all
             document.querySelectorAll('.playing-highlight').forEach(el => el.classList.remove('playing-highlight'));
+            document.querySelectorAll('.def-playing-highlight').forEach(el => el.classList.remove('def-playing-highlight'));
             
             const words = lessonData[sectionIndex].words;
             let currentWordIndex = 0;
@@ -2057,24 +2121,26 @@
                             const serialNumber = String(i + 1).padStart(2, '0');
                             const safeEnDef = wordObj.enDef ? wordObj.enDef.replace(/'/g, "\\'") : '';
                             
+                            const defBoxId = `def-box-${sectionIndex}-${globalWordIndexOffset + i}`;
+                            
                             colHtml += `
                                 <div class="vocab-row def-row-wrapper" id="${rowId}" onclick="speakWord('${safeEnWord}', '${rowId}')">
                                     <div class="def-top-floor">
-                                        <div class="word-audio-wrapper">
-                                            <div class="word-with-badge">
-                                                <span class="def-number-badge">${serialNumber}</span>
+                                        <div class="word-with-badge">
+                                            <span class="def-number-badge">${serialNumber}</span>
+                                            <div class="word-audio-wrapper">
                                                 <span class="en-text">${wordObj.en}</span>
+                                                <button class="audio-btn" aria-label="Listen" onclick="event.stopPropagation(); speakWord('${safeEnWord}', '${rowId}')">
+                                                    <svg><use href="#icon-speaker"></use></svg>
+                                                </button>
                                             </div>
-                                            <button class="audio-btn" aria-label="Listen">
-                                                <svg><use href="#icon-speaker"></use></svg>
-                                            </button>
                                         </div>
                                         <div class="ar-text">${wordObj.ar}</div>
                                     </div>
-                                    <div class="def-bottom-floor">
+                                    <div class="def-bottom-floor" id="${defBoxId}" onclick="event.stopPropagation(); speakDef('${safeEnDef}', '${defBoxId}')">
                                         <div class="def-en-text">${wordObj.enDef}</div>
                                         <div class="def-ar-wrapper">
-                                            <button class="def-audio-btn" onclick="event.stopPropagation(); speakWord('${safeEnDef}')" aria-label="Listen Definition">
+                                            <button class="def-audio-btn" aria-label="Listen Definition" onclick="event.stopPropagation(); speakDef('${safeEnDef}', '${defBoxId}')">
                                                 <svg><use href="#icon-speaker"></use></svg>
                                             </button>
                                             <div class="def-ar-text">${wordObj.arDef}</div>
