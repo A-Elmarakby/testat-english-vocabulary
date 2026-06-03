@@ -53,9 +53,9 @@
     --def-ar-size: 15px; /* Arabic definition text size */
 
     /* Synonyms & Antonyms */
-    --syn-ant-label-size: 14px; /* Small heading text (Synonyms/Antonyms) */
-    --syn-ant-en-size: 16px; /* English text inside the box */
-    --syn-ant-ar-size: 15px; /* Arabic text inside the box */
+    --syn-ant-label-size: 15px; /* Small heading text (Synonyms/Antonyms) */
+    --syn-ant-en-size: 17px; /* English text inside the box */
+    --syn-ant-ar-size: 17px; /* Arabic text inside the box */
 
     /* --- BOX COLORS --- */
     --card-bg: #ffffff; /* White background for main cards */
@@ -79,7 +79,16 @@
     --ant-hover-bg: rgba(231, 76, 60, 0.15); /* Hover background */
     --ant-active-bg: rgba(231, 76, 60, 0.25); /* Background while audio is playing */
 
-    /* --- AUDIO BUTTON --- */
+    /* --- VERBS COLORS --- */
+    --verb-v1-bg: rgba(255, 102, 0, 0.08); /* Base Form (Orange tint) */
+    --verb-v1-border: #ff6600;
+    --verb-v2-bg: rgba(92, 0, 122, 0.08); /* Past Simple (Purple tint) */
+    --verb-v2-border: #5c007a;
+    --verb-v3-bg: rgba(85, 85, 85, 0.08); /* Past Participle (Grey tint) */
+    --verb-v3-border: #555555;
+    --verb-active-bg: #fffcf8; /* Background while audio is playing */
+
+/* --- AUDIO BUTTON --- */
     --audio-btn-size: 32px; /* Width and height of the circle */
     --audio-icon-size: 15px; /* Size of the speaker icon inside */
     --audio-btn-bg: #f0e6f5; /* Default background */
@@ -810,6 +819,101 @@
             font-size: var(--syn-ant-ar-size);
             word-break: break-word;
         }
+        
+        /* =========================================================
+           VERBS SECTION (Verb Flow Layout)
+           ========================================================= */
+        .verb-card {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding: 16px 20px;
+            border-radius: var(--radius-large);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 12px rgba(92, 0, 122, 0.04);
+            margin: 0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            background-color: var(--card-bg);
+        }
+        
+        .vocab-col .verb-card:nth-child(even) { background-color: var(--def-card-bg-even); }
+        .vocab-col .verb-card:nth-child(odd) { background-color: var(--def-card-bg-odd); }
+        
+        .verb-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(92, 0, 122, 0.1);
+            border: 1px solid var(--brand-orange);
+        }
+        
+        .verb-card.verb-playing-highlight {
+            transform: scale(1.02);
+            background-color: var(--verb-active-bg) !important;
+            border: 1px solid var(--brand-orange);
+            box-shadow: inset 3px 0 0 var(--brand-orange), 0 12px 30px rgba(255, 102, 0, 0.15);
+        }
+
+        .verb-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .verb-ar {
+            font-family: 'Tajawal', sans-serif;
+            font-weight: bold;
+            color: var(--brand-dark);
+            font-size: var(--word-ar-size);
+            direction: rtl;
+            text-align: right;
+            flex: 1;
+        }
+
+        .verb-flow-container {
+            display: flex;
+            gap: 10px;
+            justify-content: space-between;
+        }
+
+        .verb-box {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 12px 8px;
+            border-radius: var(--radius-medium);
+            word-break: break-word;     /* Protects against long words */
+            overflow-wrap: break-word;  /* Protects against long words */
+            min-width: 0;               /* Critical flex bug fix for long words */
+        }
+
+        .verb-box.v1 { background-color: var(--verb-v1-bg); border-top: 3px solid var(--verb-v1-border); }
+        .verb-box.v2 { background-color: var(--verb-v2-bg); border-top: 3px solid var(--verb-v2-border); }
+        .verb-box.v3 { background-color: var(--verb-v3-bg); border-top: 3px solid var(--verb-v3-border); }
+
+        .verb-label {
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+            opacity: 0.7;
+        }
+        
+        .verb-box.v1 .verb-label { color: var(--verb-v1-border); }
+        .verb-box.v2 .verb-label { color: var(--verb-v2-border); }
+        .verb-box.v3 .verb-label { color: var(--verb-v3-border); }
+
+        .verb-en {
+            font-weight: 700;
+            color: var(--brand-dark);
+            font-size: var(--word-en-size);
+            line-height: 1.3;
+        }
+
         /* =========================================================
            CTA SECTION
            ========================================================= */
@@ -1508,6 +1612,13 @@
     .syn-ant-container {
         flex-direction: column;
     }
+    
+    /* Safely stack verbs vertically on mobile to prevent squishing long words */
+    .verb-flow-container { 
+        flex-direction: column; 
+        gap: 8px;
+    }
+    .verb-box { padding: 10px; }
 
     /* --- 5. CTA & FOOTER --- */
     .cta-inner {
@@ -1977,6 +2088,41 @@
                 { en: "kindness", ar: "عطف - ود - حنان", synEn: "goodness - gentleness", synAr: "عطف - ود - حنان", antEn: "harshness - cruelty", antAr: "قسوة - غلظة" },
                 { en: "important", ar: "هام - ضروري", synEn: "vital - necessary", synAr: "حيوي - هام - ضروري", antEn: "unimportant", antAr: "غير هام - غير ضروري" }
             ]
+        },
+        {
+            sectionTitleEn: "Conjugation of Regular Verbs",
+            sectionTitleAr: "تصريف الأفعال المنتظمة",
+            words: [
+                { v1: "act", v2: "acted", v3: "acted", ar: "يتصرف - يسلك - يمثل" },
+                { v1: "affect", v2: "affected", v3: "affected", ar: "يؤثر على" },
+                { v1: "believe", v2: "believed", v3: "believed", ar: "يصدق - يؤمن - يعتقد" },
+                { v1: "challenge", v2: "challenged", v3: "challenged", ar: "يتحدى - يواجه" },
+                { v1: "change", v2: "changed", v3: "changed", ar: "يغير - يتغير - يتبدل" },
+                { v1: "dress", v2: "dressed", v3: "dressed", ar: "يلبس - يرتدي" },
+                { v1: "fit", v2: "fitted", v3: "fitted", ar: "يناسب - يتأقلم" },
+                { v1: "help", v2: "helped", v3: "helped", ar: "يساعد - يعاون" },
+                { v1: "learn", v2: "learned - learnt", v3: "learned - learnt", ar: "يتعلم" },
+                { v1: "mention", v2: "mentioned", v3: "mentioned", ar: "يذكر" },
+                { v1: "remember", v2: "remembered", v3: "remembered", ar: "يتذكر" },
+                { v1: "remind", v2: "reminded", v3: "reminded", ar: "يذكر" },
+                { v1: "score", v2: "scored", v3: "scored", ar: "يسجل - يحرز (أهداف أو نقاط)" },
+                { v1: "shape", v2: "shaped", v3: "shaped", ar: "يشكل" },
+                { v1: "stay", v2: "stayed", v3: "stayed", ar: "يبقى - يقيم" },
+                { v1: "try", v2: "tried", v3: "tried", ar: "يحاول - يجرب" },
+                { v1: "value", v2: "valued", v3: "valued", ar: "يقيم - يثمن - يعطي أهمية" },
+                { v1: "want", v2: "wanted", v3: "wanted", ar: "يريد" }
+            ]
+        },
+        {
+            sectionTitleEn: "Conjugation of Irregular Verbs",
+            sectionTitleAr: "تصريف الأفعال غير المنتظمة",
+            words: [
+                { v1: "grow", v2: "grew", v3: "grown", ar: "ينمو - يكبر" },
+                { v1: "mean", v2: "meant", v3: "meant", ar: "يعني - يقصد" },
+                { v1: "overcome", v2: "overcame", v3: "overcome", ar: "يتغلب على" },
+                { v1: "see", v2: "saw", v3: "seen", ar: "يرى" },
+                { v1: "think", v2: "thought", v3: "thought", ar: "يفكر - يعتقد" }
+            ]
         }
     ];
 
@@ -2009,10 +2155,45 @@
 
         /* --- Helper: Remove all active colors --- */
         function clearAllHighlights() {
-            const classes = ['.playing-highlight', '.def-playing-highlight', '.syn-playing-highlight', '.ant-playing-highlight'];
+            const classes = ['.playing-highlight', '.def-playing-highlight', '.syn-playing-highlight', '.ant-playing-highlight', '.verb-playing-highlight'];
             classes.forEach(cls => {
                 document.querySelectorAll(cls).forEach(el => el.classList.remove(cls.substring(1)));
             });
+        }
+
+        // Play Verb Sequence smoothly (v1, v2, v3)
+        function speakVerbSequence(v1, v2, v3, cardId) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                clearAllHighlights(); 
+
+                const cleanText = (t) => t.replace(/-/g, 'or');
+                const combinedText = `${cleanText(v1)}, ${cleanText(v2)}, ${cleanText(v3)}`;
+
+                const utterance = new SpeechSynthesisUtterance(combinedText);
+                utterance.lang = 'en-US';
+                utterance.rate = currentSpeechRate;
+                
+                utterance.onstart = () => {
+                    showGlobalStop();
+                    if (cardId) {
+                        const cardEl = document.getElementById(cardId);
+                        if (cardEl) cardEl.classList.add('verb-playing-highlight');
+                    }
+                };
+                
+                utterance.onend = () => {
+                    hideGlobalStop();
+                    if (cardId) {
+                        const cardEl = document.getElementById(cardId);
+                        if (cardEl) cardEl.classList.remove('verb-playing-highlight');
+                    }
+                };
+                
+                utterance.onerror = () => hideGlobalStop();
+                
+                window.speechSynthesis.speak(utterance);
+            }
         }
 
         // Stop all audio
@@ -2114,7 +2295,10 @@
                 if (currentWordIndex < words.length) {
                     const wordObj = words[currentWordIndex];
                     const rowId = `row-${sectionIndex}-${currentWordIndex}`;
-                    const rowEl = document.getElementById(rowId);
+                    const verbId = `verb-card-${sectionIndex}-${currentWordIndex}`;
+                    
+                    // Find either normal row or verb card
+                    const rowEl = document.getElementById(rowId) || document.getElementById(verbId);
                     
                     // Skip hidden rows (from search filter)
                     if (rowEl && rowEl.style.display === "none") {
@@ -2123,7 +2307,13 @@
                         return;
                     }
                     
-                    const utterance = new SpeechSynthesisUtterance(wordObj.en);
+                    // Support for Verbs in Play All
+                    let textToSpeak = wordObj.en;
+                    if (wordObj.v1) {
+                        textToSpeak = `${wordObj.v1}, ${wordObj.v2}, ${wordObj.v3}`.replace(/-/g, 'or');
+                    }
+                    
+                    const utterance = new SpeechSynthesisUtterance(textToSpeak);
                     utterance.lang = 'en-US';
                     utterance.rate = currentSpeechRate;
                     
@@ -2171,15 +2361,15 @@
             
             // Loop through each card to filter rows inside it
             cards.forEach(card => {
-                const rows = card.querySelectorAll('.vocab-row');
+                const rows = card.querySelectorAll('.vocab-row, .verb-card');
                 let cardVisibleCount = 0;
                 
                 rows.forEach(row => {
-                    const enText = row.querySelector('.en-text').innerText.toLowerCase();
-                    const arText = row.querySelector('.ar-text').innerText.toLowerCase();
+                    // Smart Search: Safely grabs all text inside the card (English, Arabic, Verbs, etc.)
+                    const rowText = row.innerText.toLowerCase();
                     
                     // Show or hide row based on search query
-                    if (enText.includes(query) || arText.includes(query)) {
+                    if (rowText.includes(query)) {
                         row.style.display = "flex";
                         cardVisibleCount++;
                         totalVisibleCount++;
@@ -2252,16 +2442,49 @@
                 // Smart Checks for Layout Types
                 const isDefSection = section.words.length > 0 && section.words[0].enDef !== undefined;
                 const isSynAntSection = section.words.length > 0 && section.words[0].synEn !== undefined;
-                const gridClass = (isDefSection || isSynAntSection) ? "vocab-grid single-column" : "vocab-grid";
+                const isVerbSection = section.words.length > 0 && section.words[0].v1 !== undefined;
+                
+                // Force Single Column for complex cards
+                const gridClass = (isDefSection || isSynAntSection || isVerbSection) ? "vocab-grid single-column" : "vocab-grid";
                 htmlContent += `<div class="${gridClass}">`;
 
                 const buildColumn = (wordsArray, globalWordIndexOffset) => {
                     let colHtml = '<div class="vocab-col">';
                     wordsArray.forEach((wordObj, i) => {
-                        const safeEnWord = wordObj.en.replace(/'/g, "\\'");
+                        const safeEnWord = wordObj.en ? wordObj.en.replace(/'/g, "\\'") : '';
                         const rowId = `row-${sectionIndex}-${globalWordIndexOffset + i}`;
                         
-                        if (isSynAntSection) {
+                        if (isVerbSection) {
+                            const verbCardId = `verb-card-${sectionIndex}-${globalWordIndexOffset + i}`;
+                            const safeV1 = wordObj.v1.replace(/'/g, "\\'");
+                            const safeV2 = wordObj.v2.replace(/'/g, "\\'");
+                            const safeV3 = wordObj.v3.replace(/'/g, "\\'");
+                            
+                            colHtml += `
+                                <div class="verb-card" id="${verbCardId}" onclick="speakVerbSequence('${safeV1}', '${safeV2}', '${safeV3}', '${verbCardId}')">
+                                    <div class="verb-header">
+                                        <button class="audio-btn" aria-label="Listen Verbs" onclick="event.stopPropagation(); speakVerbSequence('${safeV1}', '${safeV2}', '${safeV3}', '${verbCardId}')">
+                                            <svg><use href="#icon-speaker"></use></svg>
+                                        </button>
+                                        <div class="verb-ar">${wordObj.ar}</div>
+                                    </div>
+                                    <div class="verb-flow-container">
+                                        <div class="verb-box v1">
+                                            <span class="verb-label">Present</span>
+                                            <span class="verb-en">${wordObj.v1}</span>
+                                        </div>
+                                        <div class="verb-box v2">
+                                            <span class="verb-label">Past</span>
+                                            <span class="verb-en">${wordObj.v2}</span>
+                                        </div>
+                                        <div class="verb-box v3">
+                                            <span class="verb-label">P.P</span>
+                                            <span class="verb-en">${wordObj.v3}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        } else if (isSynAntSection) {
                             // Synonyms & Antonyms Split Layout
                             const serialNumber = String(i + 1).padStart(2, '0');
                             const synBoxId = `syn-box-${sectionIndex}-${globalWordIndexOffset + i}`;
@@ -2369,7 +2592,7 @@
                     return colHtml;
                 };
 
-                if (isDefSection || isSynAntSection) {
+                if (isDefSection || isSynAntSection || isVerbSection) {
                     htmlContent += buildColumn(section.words, 0);
                 } else {
                     const midpoint = Math.ceil(section.words.length / 2);
