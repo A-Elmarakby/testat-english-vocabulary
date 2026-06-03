@@ -161,8 +161,9 @@
         /* Search Box */
         .search-box {
             position: relative;
-            width: 100%;
-            max-width: 260px;
+            flex: 1; /* Fluid logic: automatically occupies all available space */
+            margin-right: 0;
+            margin-left: 20px; /* Creates a clean gap on the left side of the search input */
             transition: all 0.3s ease;
         }
 
