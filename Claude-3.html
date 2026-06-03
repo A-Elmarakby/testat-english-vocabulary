@@ -37,7 +37,7 @@
             --brand-dark: #38014e;
             --brand-orange: #ff6600;
             --card-bg: #ffffff;
-            --row-even: #f2f1f3;
+            --row-even: #faf8fc;
             --row-hover: #f1e6f5;
             --text-grey: #555555;
             --border-color: #eeeeee;
@@ -49,21 +49,6 @@
             --def-trans-color: #444444;
             --def-en-size: 16px;
             --def-ar-size: 15px;
-            
-            /* Section Card Controls (Definitions, Synonyms, Antonyms) */
-            --def-card-bg-even: #ffffff; /* Controls even card background */
-            --def-card-bg-odd:  #ffffff; /* Controls odd card background */
-
-            /* Synonyms & Antonyms Colors */
-            --syn-bg: rgba(46, 204, 113, 0.08); /* Light Green */
-            --syn-border: #2ecc71;
-            --syn-hover-bg: rgba(46, 204, 113, 0.15); /* Synonym hover */
-            --syn-active-bg: rgba(46, 204, 113, 0.25); /* Synonym active playing */
-            
-            --ant-bg: rgba(231, 76, 60, 0.08); /* Light Red */
-            --ant-border: #e74c3c;
-            --ant-hover-bg: rgba(231, 76, 60, 0.15); /* Antonym hover */
-            --ant-active-bg: rgba(231, 76, 60, 0.25); /* Antonym active playing */
         }
 
         /* * HEADER STYLES */
@@ -649,9 +634,6 @@
             .def-en-text { text-align: left !important; width: 100%; }
             .def-ar-wrapper { width: 100%; justify-content: space-between; flex-direction: row-reverse; }
             .def-ar-text { text-align: right !important; }
-            
-            /* Stack Synonyms and Antonyms vertically on mobile */
-            .syn-ant-container { flex-direction: column; }
         }
 
         /* =========================================================
@@ -678,15 +660,13 @@
             gap: 16px;
         }
 
-        /* Card styles (Custom background colors to prevent zebra-striping conflicts) */
-        .vocab-col .vocab-row.def-row-wrapper:nth-child(even) { background-color: var(--def-card-bg-even); }
-        .vocab-col .vocab-row.def-row-wrapper:nth-child(odd) { background-color: var(--def-card-bg-odd); }
-
+        /* Card styles */
         .vocab-row.def-row-wrapper {
             flex-direction: column;
             align-items: stretch;
             padding: 16px 20px; 
             gap: 14px; 
+            background: #ffffff;
             border-radius: 12px;
             border: 1px solid rgba(0, 0, 0, 0.05);
             box-shadow: 0 4px 12px rgba(92, 0, 122, 0.04);
@@ -695,16 +675,17 @@
         }
 
         /* Hover effect */
-        .vocab-col .vocab-row.def-row-wrapper:hover {
+        .vocab-row.def-row-wrapper:hover {
             transform: translateY(-3px);
             box-shadow: 0 10px 25px rgba(92, 0, 122, 0.1);
+            background: #ffffff; /* Prevent default hover color */
             border: 1px solid var(--brand-orange);
         }
 
         /* Play active effect */
-        .vocab-col .vocab-row.def-row-wrapper.playing-highlight {
+        .vocab-row.def-row-wrapper.playing-highlight {
             transform: scale(1.02);
-            background-color: #fffcf8 !important;
+            background-color: #fffcf8;
             border: 1px solid var(--brand-orange);
             /* Use inset shadow instead of border-left to prevent layout shift jitter */
             box-shadow: inset 3px 0 0 var(--brand-orange), 0 12px 30px rgba(255, 102, 0, 0.15);
@@ -821,108 +802,16 @@
             flex: 1;
         }
 
-        /* =========================================================
-           SYNONYMS & ANTONYMS SECTION (Split Layout)
-           ========================================================= */
-        /* Container for the two halves */
-        .syn-ant-container {
-            display: flex;
-            gap: 16px;
-            margin-top: 4px;
-        }
-
-        /* Shared styles for both boxes */
-        .syn-box, .ant-box {
-            flex: 1;
-            border-radius: 8px;
-            padding: 16px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        /* Specific styles for Synonyms */
-        .syn-box {
-            background-color: var(--syn-bg);
-            border-top: 3px solid var(--syn-border);
-        }
-        .syn-box:hover {
-            background-color: var(--syn-hover-bg);
-        }
-        .syn-box.syn-playing-highlight {
-            background-color: var(--syn-active-bg);
-            transform: scale(1.02);
-            box-shadow: inset 4px 0 0 var(--syn-border), 0 8px 20px rgba(46, 204, 113, 0.2);
-        }
-        /* Highlight the audio button inside Synonyms when playing */
-        .syn-box.syn-playing-highlight .def-audio-btn {
-            background-color: var(--syn-border);
-            color: #ffffff;
-        }
-
-        /* Specific styles for Antonyms */
-        .ant-box {
-            background-color: var(--ant-bg);
-            border-top: 3px solid var(--ant-border);
-        }
-        .ant-box:hover {
-            background-color: var(--ant-hover-bg);
-        }
-        .ant-box.ant-playing-highlight {
-            background-color: var(--ant-active-bg);
-            transform: scale(1.02);
-            box-shadow: inset 4px 0 0 var(--ant-border), 0 8px 20px rgba(231, 76, 60, 0.2);
-        }
-        /* Highlight the audio button inside Antonyms when playing */
-        .ant-box.ant-playing-highlight .def-audio-btn {
-            background-color: var(--ant-border);
-            color: #ffffff;
-        }
-
-        /* Micro Labels (Synonyms / Antonyms) */
-        .syn-ant-label {
-            font-size: 12px;
-            font-weight: 800;
-            text-transform: uppercase;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            opacity: 0.8;
-            margin-bottom: 4px;
-        }
-        .syn-box .syn-ant-label { color: #27ae60; }
-        .ant-box .syn-ant-label { color: #c0392b; }
-
-        /* Align text and audio inside the split boxes */
-        .syn-ant-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .syn-ant-words {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            flex: 1;
-        }
-
-        .syn-ant-en {
-            font-weight: 700;
-            color: var(--brand-dark);
-            font-size: 15px;
-            word-break: break-word;
-        }
-
-        .syn-ant-ar {
+        .def-ar-text {
             font-family: 'Tajawal', sans-serif;
-            font-weight: 600;
             color: #555555;
-            font-size: 14px;
+            text-align: right;
+            direction: rtl;
+            font-size: var(--def-ar-size);
+            font-weight: 600;
+            line-height: 1.6;
             word-break: break-word;
+            overflow-wrap: break-word;
         }
 
         /* Mini audio button */
@@ -953,6 +842,190 @@
             fill: currentColor;
         }
 
+
+        /* =========================================================
+           SYNONYMS & ANTONYMS SECTION
+           ========================================================= */
+
+        /* Header accent for syn/ant section */
+        .section-card.syn-ant-card .section-header {
+            background: linear-gradient(135deg, var(--brand-dark) 0%, #7b0099 100%);
+            border-bottom: 3px solid #00c9a7;
+        }
+
+        /* Syn/Ant Grid: 1 column of synonym-group cards */
+        .syn-ant-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            padding: 18px 16px;
+            background: linear-gradient(180deg, rgba(92,0,122,0.03) 0%, rgba(0,201,167,0.03) 100%);
+        }
+
+        /* Each group card */
+        .syn-group-card {
+            background: #ffffff;
+            border-radius: 14px;
+            border: 1px solid rgba(0,0,0,0.05);
+            box-shadow: 0 3px 12px rgba(92,0,122,0.05);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .syn-group-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 28px rgba(92,0,122,0.10);
+            border-color: rgba(0,201,167,0.3);
+        }
+
+        /* Top: main word */
+        .syn-group-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 13px 18px;
+            background: linear-gradient(90deg, rgba(92,0,122,0.06), rgba(0,201,167,0.06));
+            border-bottom: 1px solid rgba(0,0,0,0.04);
+            cursor: pointer;
+        }
+
+        .syn-group-header:active { transform: scale(0.99); }
+
+        .syn-main-word {
+            font-size: 17px;
+            font-weight: 800;
+            color: var(--brand-dark);
+            letter-spacing: -0.01em;
+        }
+
+        .syn-main-ar {
+            font-size: 15px;
+            color: #555;
+            font-weight: 600;
+            direction: rtl;
+            text-align: right;
+        }
+
+        .syn-word-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Synonym / Antonym pill badges */
+        .syn-body {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .syn-row {
+            display: flex;
+            align-items: center;
+            padding: 10px 18px;
+            gap: 12px;
+            border-top: 1px solid rgba(0,0,0,0.04);
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .syn-row:hover { background: #f8f5fb; }
+
+        .syn-row.antonym-row:hover { background: #fff5f5; }
+
+        /* Synonym badge - teal */
+        .syn-type-badge {
+            font-size: 10px;
+            font-weight: 800;
+            padding: 3px 9px;
+            border-radius: 20px;
+            flex-shrink: 0;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .syn-type-badge.syn {
+            background: rgba(0,201,167,0.12);
+            color: #009e82;
+            border: 1px solid rgba(0,201,167,0.3);
+        }
+
+        .syn-type-badge.ant {
+            background: rgba(220,50,50,0.10);
+            color: #c62828;
+            border: 1px solid rgba(220,50,50,0.25);
+        }
+
+        .syn-words-en {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--brand-dark);
+            flex: 1;
+        }
+
+        .syn-words-ar {
+            font-size: 13px;
+            color: #666;
+            direction: rtl;
+            text-align: right;
+            font-weight: 600;
+            flex: 1;
+        }
+
+        /* Audio btn in syn rows */
+        .syn-audio-btn {
+            background: #f0e6f5;
+            border: none;
+            cursor: pointer;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--brand-purple);
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .syn-audio-btn:hover {
+            background: var(--brand-purple);
+            color: #fff;
+            transform: scale(1.1);
+        }
+
+        .syn-audio-btn svg {
+            width: 13px;
+            height: 13px;
+            fill: currentColor;
+        }
+
+        /* Section count badge with teal accent */
+        .syn-count-badge {
+            font-size: 12px;
+            background: rgba(0,201,167,0.15);
+            color: #00a085;
+            border: 1px solid rgba(0,201,167,0.35);
+            border-radius: 20px;
+            padding: 3px 10px;
+            margin-top: 5px;
+            display: inline-block;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .syn-group-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 6px;
+            }
+            .syn-main-ar { text-align: left; }
+            .syn-row {
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            .syn-words-ar { text-align: right; width: 100%; }
+        }
 
         /* =========================================================
            CTA SECTION
@@ -1942,20 +2015,61 @@
                     enDef: "being the only one of its kind",
                     arDef: "كونه الوحيد من نوعه أو لا مثيل له"
                 }
-             ]
+            ]
         },
         {
-                sectionTitleEn: "Synonyms and Antonyms",
-                sectionTitleAr: "المرادفات والمضادات",
-                words: [
-                { en: "simple", ar: "بسيط - سهل", synEn: "easy", synAr: "بسيط - سهل", antEn: "complex - difficult - ordinary", antAr: "معقد - صعب - تقليدي" },
-                { en: "strength", ar: "قوة - قدرة", synEn: "ability - power", synAr: "قدرة - طاقة - قوة", antEn: "weakness", antAr: "ضعف - فتور" },
-                { en: "stressed", ar: "متوتر - مضغوط", synEn: "worried - anxious", synAr: "قلق - مضطرب - متوتر", antEn: "quiet - relaxed", antAr: "هادئ - مسترخي" },
-                { en: "popular", ar: "مشهور - معروف", synEn: "famous - well-known", synAr: "مشهور - معروف", antEn: "unpopular", antAr: "غير مشهور - مغمور" },
-                { en: "unique", ar: "فريد - مختلف - مميز", synEn: "different - strange - rare", synAr: "مختلف - غريب - نادر", antEn: "normal - common", antAr: "طبيعي - شائع" },
-                { en: "positive", ar: "إيجابي - مفيد", synEn: "useful - helpful", synAr: "مفيد - مساعد - نافع", antEn: "negative", antAr: "سلبي - هدام" },
-                { en: "kindness", ar: "عطف - ود - حنان", synEn: "goodness - gentleness", synAr: "عطف - ود - حنان", antEn: "harshness - cruelty", antAr: "قسوة - غلظة" },
-                { en: "important", ar: "هام - ضروري", synEn: "vital - necessary", synAr: "حيوي - هام - ضروري", antEn: "unimportant", antAr: "غير هام - غير ضروري" }
+            sectionTitleEn: "Synonyms and Antonyms",
+            sectionTitleAr: "المرادفات والمضادات",
+            isSynAnt: true,
+            groups: [
+                {
+                    word: "simple",
+                    wordAr: "بسيط - سهل",
+                    synonyms: [{ en: "easy", ar: "بسيط - سهل" }],
+                    antonyms: [{ en: "complex – difficult - ordinary", ar: "معقد – صعب - تقليدي" }]
+                },
+                {
+                    word: "strength",
+                    wordAr: "قوة - قدرة",
+                    synonyms: [{ en: "ability - power", ar: "قدرة – طاقة - قوة" }],
+                    antonyms: [{ en: "weakness", ar: "ضعف - فتور" }]
+                },
+                {
+                    word: "stressed",
+                    wordAr: "متوتر – مضغوط",
+                    synonyms: [{ en: "worried - anxious", ar: "قلق – مضطرب - متوتر" }],
+                    antonyms: [{ en: "quiet - relaxed", ar: "هادئ - مسترخي" }]
+                },
+                {
+                    word: "popular",
+                    wordAr: "مشهور - معروف",
+                    synonyms: [{ en: "famous – well-known", ar: "مشهور - معروف" }],
+                    antonyms: [{ en: "unpopular", ar: "غير مشهور - مغمور" }]
+                },
+                {
+                    word: "unique",
+                    wordAr: "فريد – مختلف - مميز",
+                    synonyms: [{ en: "different – strange - rare", ar: "مختلف – غريب - نادر" }],
+                    antonyms: [{ en: "normal - common", ar: "طبيعي – شائع" }]
+                },
+                {
+                    word: "positive",
+                    wordAr: "إيجابي - مفيد",
+                    synonyms: [{ en: "useful – helpful", ar: "مفيد – مساعد - نافع" }],
+                    antonyms: [{ en: "negative", ar: "سلبي - هدام" }]
+                },
+                {
+                    word: "kindness",
+                    wordAr: "عطف – ود - حنان",
+                    synonyms: [{ en: "goodness - gentleness", ar: "عطف – ود - حنان" }],
+                    antonyms: [{ en: "harshness – cruelty", ar: "قسوة - غلظة" }]
+                },
+                {
+                    word: "important",
+                    wordAr: "هام - ضروري",
+                    synonyms: [{ en: "vital – necessary", ar: "حيوي – هام - ضروري" }],
+                    antonyms: [{ en: "unimportant", ar: "غير هام – غير ضروري" }]
+                }
             ]
         }
     ];
@@ -1992,8 +2106,6 @@
             window.speechSynthesis.cancel();
             document.querySelectorAll('.playing-highlight').forEach(el => el.classList.remove('playing-highlight'));
             document.querySelectorAll('.def-playing-highlight').forEach(el => el.classList.remove('def-playing-highlight'));
-            document.querySelectorAll('.syn-playing-highlight').forEach(el => el.classList.remove('syn-playing-highlight'));
-            document.querySelectorAll('.ant-playing-highlight').forEach(el => el.classList.remove('ant-playing-highlight'));
             hideGlobalStop();
             
             // Reset play all buttons
@@ -2009,11 +2121,7 @@
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
                 
-                // Clear all highlights when a new word is clicked
                 document.querySelectorAll('.playing-highlight').forEach(el => el.classList.remove('playing-highlight'));
-                document.querySelectorAll('.def-playing-highlight').forEach(el => el.classList.remove('def-playing-highlight'));
-                document.querySelectorAll('.syn-playing-highlight').forEach(el => el.classList.remove('syn-playing-highlight'));
-                document.querySelectorAll('.ant-playing-highlight').forEach(el => el.classList.remove('ant-playing-highlight'));
 
                 const utterance = new SpeechSynthesisUtterance(text);
                 utterance.lang = 'en-US';
@@ -2043,16 +2151,12 @@
             }
         }
 
-        // Modular play function for sub-boxes (Definitions, Synonyms, Antonyms)
-        function speakSubBox(text, boxId, highlightClass) {
+        // Play definition specific highlight
+        function speakDef(text, boxId) {
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
-                
-                // Clear all existing highlights
-                document.querySelectorAll('.playing-highlight').forEach(el => el.classList.remove('playing-highlight'));
                 document.querySelectorAll('.def-playing-highlight').forEach(el => el.classList.remove('def-playing-highlight'));
-                document.querySelectorAll('.syn-playing-highlight').forEach(el => el.classList.remove('syn-playing-highlight'));
-                document.querySelectorAll('.ant-playing-highlight').forEach(el => el.classList.remove('ant-playing-highlight'));
+                document.querySelectorAll('.playing-highlight').forEach(el => el.classList.remove('playing-highlight'));
 
                 const utterance = new SpeechSynthesisUtterance(text);
                 utterance.lang = 'en-US';
@@ -2062,7 +2166,7 @@
                     showGlobalStop();
                     if (boxId) {
                         const boxEl = document.getElementById(boxId);
-                        if (boxEl) boxEl.classList.add(highlightClass);
+                        if (boxEl) boxEl.classList.add('def-playing-highlight');
                     }
                 };
                 
@@ -2070,7 +2174,7 @@
                     hideGlobalStop();
                     if (boxId) {
                         const boxEl = document.getElementById(boxId);
-                        if (boxEl) boxEl.classList.remove(highlightClass);
+                        if (boxEl) boxEl.classList.remove('def-playing-highlight');
                     }
                 };
                 
@@ -2085,11 +2189,7 @@
             if (!('speechSynthesis' in window)) return;
             
             window.speechSynthesis.cancel();
-            // Clear all highlights before starting play all
             document.querySelectorAll('.playing-highlight').forEach(el => el.classList.remove('playing-highlight'));
-            document.querySelectorAll('.def-playing-highlight').forEach(el => el.classList.remove('def-playing-highlight'));
-            document.querySelectorAll('.syn-playing-highlight').forEach(el => el.classList.remove('syn-playing-highlight'));
-            document.querySelectorAll('.ant-playing-highlight').forEach(el => el.classList.remove('ant-playing-highlight'));
             
             const words = lessonData[sectionIndex].words;
             let currentWordIndex = 0;
@@ -2153,36 +2253,47 @@
 // Search filter logic
         function filterWords() {
             const query = document.getElementById('searchInput').value.toLowerCase();
-            // Get all section cards to control their visibility
             const cards = document.querySelectorAll('.section-card');
             let totalVisibleCount = 0;
             let firstVisibleRow = null;
             
-            // Loop through each card to filter rows inside it
             cards.forEach(card => {
+                // Handle syn/ant cards separately
+                if (card.classList.contains('syn-ant-card')) {
+                    const groups = card.querySelectorAll('.syn-group-card');
+                    let cardVisibleCount = 0;
+                    groups.forEach(group => {
+                        const texts = group.innerText.toLowerCase();
+                        if (query.length === 0 || texts.includes(query)) {
+                            group.style.display = 'block';
+                            cardVisibleCount++;
+                            totalVisibleCount++;
+                            if (!firstVisibleRow) firstVisibleRow = group;
+                        } else {
+                            group.style.display = 'none';
+                        }
+                    });
+                    card.style.display = (query.length > 0 && cardVisibleCount === 0) ? 'none' : 'block';
+                    return;
+                }
+
                 const rows = card.querySelectorAll('.vocab-row');
                 let cardVisibleCount = 0;
                 
                 rows.forEach(row => {
-                    const enText = row.querySelector('.en-text').innerText.toLowerCase();
-                    const arText = row.querySelector('.ar-text').innerText.toLowerCase();
+                    const enText = row.querySelector('.en-text') ? row.querySelector('.en-text').innerText.toLowerCase() : '';
+                    const arText = row.querySelector('.ar-text') ? row.querySelector('.ar-text').innerText.toLowerCase() : '';
                     
-                    // Show or hide row based on search query
                     if (enText.includes(query) || arText.includes(query)) {
                         row.style.display = "flex";
                         cardVisibleCount++;
                         totalVisibleCount++;
-                        
-                        // Capture the first matched row for smart scrolling
-                        if (!firstVisibleRow) {
-                            firstVisibleRow = row;
-                        }
+                        if (!firstVisibleRow) firstVisibleRow = row;
                     } else {
                         row.style.display = "none";
                     }
                 });
 
-                // Hide the entire card if it has no matching words
                 if (query.length > 0 && cardVisibleCount === 0) {
                     card.style.display = "none";
                 } else {
@@ -2190,7 +2301,6 @@
                 }
             });
 
-            // Handle the "No Results" message safely
             let noResults = document.getElementById('no-results-msg');
             const container = document.getElementById('vocabulary-container');
             
@@ -2210,13 +2320,57 @@
                 if (noResults) noResults.style.display = 'none';
             }
 
-            // Smart UX: Smoothly scroll and center the found word in the viewport
             if (query.length > 0 && firstVisibleRow) {
-                firstVisibleRow.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'center'
-                });
+                firstVisibleRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
+        }
+
+        // Play all words in syn/ant section
+        function playSynAntSection(sectionIndex, btnElement) {
+            if (!('speechSynthesis' in window)) return;
+            window.speechSynthesis.cancel();
+            document.querySelectorAll('.playing-highlight').forEach(el => el.classList.remove('playing-highlight'));
+
+            const section = lessonData[sectionIndex];
+            if (!section || !section.isSynAnt) return;
+
+            // Flatten: main word, then synonyms, then antonyms for each group
+            const allWords = [];
+            section.groups.forEach((group, gIndex) => {
+                allWords.push({ text: group.word, rowId: `row-${sectionIndex}-${gIndex}` });
+                group.synonyms.forEach(s => allWords.push({ text: s.en, rowId: null }));
+                group.antonyms.forEach(a => allWords.push({ text: a.en, rowId: null }));
+            });
+
+            let idx = 0;
+            btnElement.innerHTML = `<i class="fas fa-stop"></i> إيقاف`;
+            btnElement.style.background = "#d32f2f";
+            btnElement.onclick = () => globalStop();
+
+            function speakNext() {
+                if (idx < allWords.length) {
+                    const item = allWords[idx];
+                    const rowEl = item.rowId ? document.getElementById(item.rowId) : null;
+                    if (rowEl && rowEl.style.display === "none") { idx++; speakNext(); return; }
+                    const utterance = new SpeechSynthesisUtterance(item.text);
+                    utterance.lang = 'en-US';
+                    utterance.rate = currentSpeechRate;
+                    utterance.onstart = () => {
+                        showGlobalStop();
+                        if (rowEl) { rowEl.classList.add('playing-highlight'); rowEl.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+                    };
+                    utterance.onend = () => {
+                        if (rowEl) rowEl.classList.remove('playing-highlight');
+                        idx++; speakNext();
+                    };
+                    utterance.onerror = () => { hideGlobalStop(); resetPlayBtn(btnElement, sectionIndex); };
+                    window.speechSynthesis.speak(utterance);
+                } else {
+                    hideGlobalStop();
+                    resetPlayBtn(btnElement, sectionIndex);
+                }
+            }
+            speakNext();
         }
 
         function renderLesson() {
@@ -2224,6 +2378,78 @@
             let htmlContent = '';
 
             lessonData.forEach((section, sectionIndex) => {
+                
+                // ── Synonyms & Antonyms special render ──
+                if (section.isSynAnt) {
+                    const groupCount = section.groups.length;
+                    htmlContent += `
+                        <div class="section-card syn-ant-card" style="margin-bottom: 50px;">
+                            <div class="section-header">
+                                <div class="section-header-titles">
+                                    <div class="en-title">${section.sectionTitleEn}</div>
+                                    <div class="ar-title">${section.sectionTitleAr}</div>
+                                    <div class="syn-count-badge">${groupCount} مجموعة</div>
+                                </div>
+                                <button class="play-all-btn" onclick="playSynAntSection(${sectionIndex}, this)">
+                                    <i class="fas fa-play"></i> استمع للكل
+                                </button>
+                            </div>
+                            <div class="syn-ant-grid">
+                    `;
+
+                    section.groups.forEach((group, gIndex) => {
+                        const rowId = `row-${sectionIndex}-${gIndex}`;
+                        const safeWord = group.word.replace(/'/g, "\\'");
+                        htmlContent += `
+                            <div class="syn-group-card" id="${rowId}">
+                                <div class="syn-group-header" onclick="speakWord('${safeWord}', '${rowId}')">
+                                    <div class="syn-word-left">
+                                        <button class="syn-audio-btn" aria-label="Listen" onclick="event.stopPropagation(); speakWord('${safeWord}', '${rowId}')">
+                                            <svg><use href="#icon-speaker"></use></svg>
+                                        </button>
+                                        <span class="syn-main-word en-text">${group.word}</span>
+                                    </div>
+                                    <span class="syn-main-ar ar-text">${group.wordAr}</span>
+                                </div>
+                                <div class="syn-body">
+                        `;
+
+                        group.synonyms.forEach(syn => {
+                            const safeSyn = syn.en.replace(/'/g, "\\'");
+                            htmlContent += `
+                                <div class="syn-row" onclick="speakWord('${safeSyn}')">
+                                    <span class="syn-type-badge syn">Synonym</span>
+                                    <span class="syn-words-en en-text">${syn.en}</span>
+                                    <span class="syn-words-ar ar-text">${syn.ar}</span>
+                                    <button class="syn-audio-btn" onclick="event.stopPropagation(); speakWord('${safeSyn}')">
+                                        <svg><use href="#icon-speaker"></use></svg>
+                                    </button>
+                                </div>
+                            `;
+                        });
+
+                        group.antonyms.forEach(ant => {
+                            const safeAnt = ant.en.replace(/'/g, "\\'");
+                            htmlContent += `
+                                <div class="syn-row antonym-row" onclick="speakWord('${safeAnt}')">
+                                    <span class="syn-type-badge ant">Antonym</span>
+                                    <span class="syn-words-en en-text">${ant.en}</span>
+                                    <span class="syn-words-ar ar-text">${ant.ar}</span>
+                                    <button class="syn-audio-btn" onclick="event.stopPropagation(); speakWord('${safeAnt}')">
+                                        <svg><use href="#icon-speaker"></use></svg>
+                                    </button>
+                                </div>
+                            `;
+                        });
+
+                        htmlContent += `</div></div>`; // close syn-body + syn-group-card
+                    });
+
+                    htmlContent += `</div></div>`; // close syn-ant-grid + section-card
+                    return;
+                }
+
+                // ── Standard / Definition sections (unchanged) ──
                 htmlContent += `
                     <div class="section-card" style="margin-bottom: 50px;">
                         <div class="section-header">
@@ -2238,10 +2464,11 @@
                         </div>
                 `;
 
-                // Smart Checks for Layout Types
+                // Smart Check: Does this section have definitions?
                 const isDefSection = section.words.length > 0 && section.words[0].enDef !== undefined;
-                const isSynAntSection = section.words.length > 0 && section.words[0].synEn !== undefined;
-                const gridClass = (isDefSection || isSynAntSection) ? "vocab-grid single-column" : "vocab-grid";
+                
+                // Apply single column class if it's a definition section
+                const gridClass = isDefSection ? "vocab-grid single-column" : "vocab-grid";
                 htmlContent += `<div class="${gridClass}">`;
 
                 const buildColumn = (wordsArray, globalWordIndexOffset) => {
@@ -2250,64 +2477,7 @@
                         const safeEnWord = wordObj.en.replace(/'/g, "\\'");
                         const rowId = `row-${sectionIndex}-${globalWordIndexOffset + i}`;
                         
-                        if (isSynAntSection) {
-                            // Synonyms & Antonyms Split Layout
-                            const serialNumber = String(i + 1).padStart(2, '0');
-                            const synBoxId = `syn-box-${sectionIndex}-${globalWordIndexOffset + i}`;
-                            const antBoxId = `ant-box-${sectionIndex}-${globalWordIndexOffset + i}`;
-                            
-                            colHtml += `
-                                <div class="vocab-row def-row-wrapper" id="${rowId}" onclick="speakWord('${safeEnWord}', '${rowId}')">
-                                    <div class="def-top-floor">
-                                        <div class="word-with-badge">
-                                            <span class="def-number-badge">${serialNumber}</span>
-                                            <div class="word-audio-wrapper">
-                                                <span class="en-text">${wordObj.en}</span>
-                                                <button class="audio-btn" aria-label="Listen" onclick="event.stopPropagation(); speakWord('${safeEnWord}', '${rowId}')">
-                                                    <svg><use href="#icon-speaker"></use></svg>
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div class="ar-text">${wordObj.ar}</div>
-                                    </div>
-                                    <div class="syn-ant-container">
-                                        <!-- Synonyms Half -->
-                                        <div class="syn-box" id="${synBoxId}" onclick="event.stopPropagation(); speakSubBox('${wordObj.synEn.replace(/'/g, "\\'")}', '${synBoxId}', 'syn-playing-highlight')">
-                                            <div class="syn-ant-label">
-                                                <span>Synonyms</span>
-                                                <span>المرادفات</span>
-                                            </div>
-                                            <div class="syn-ant-content">
-                                                <div class="syn-ant-words">
-                                                    <span class="syn-ant-en">${wordObj.synEn}</span>
-                                                    <span class="syn-ant-ar">${wordObj.synAr}</span>
-                                                </div>
-                                                <button class="def-audio-btn" aria-label="Listen Synonyms" onclick="event.stopPropagation(); speakSubBox('${wordObj.synEn.replace(/'/g, "\\'")}', '${synBoxId}', 'syn-playing-highlight')">
-                                                    <svg><use href="#icon-speaker"></use></svg>
-                                                </button>
-                                            </div>
-                                        </div>
-                                        
-                                        <!-- Antonyms Half -->
-                                        <div class="ant-box" id="${antBoxId}" onclick="event.stopPropagation(); speakSubBox('${wordObj.antEn.replace(/'/g, "\\'")}', '${antBoxId}', 'ant-playing-highlight')">
-                                            <div class="syn-ant-label">
-                                                <span>Antonyms</span>
-                                                <span>المضادات</span>
-                                            </div>
-                                            <div class="syn-ant-content">
-                                                <div class="syn-ant-words">
-                                                    <span class="syn-ant-en">${wordObj.antEn}</span>
-                                                    <span class="syn-ant-ar">${wordObj.antAr}</span>
-                                                </div>
-                                                <button class="def-audio-btn" aria-label="Listen Antonyms" onclick="event.stopPropagation(); speakSubBox('${wordObj.antEn.replace(/'/g, "\\'")}', '${antBoxId}', 'ant-playing-highlight')">
-                                                    <svg><use href="#icon-speaker"></use></svg>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            `;
-                        } else if (isDefSection) {
+                        if (isDefSection) {
                             // Auto-generate a two-digit serial number (e.g., 01, 02)
                             const serialNumber = String(i + 1).padStart(2, '0');
                             const safeEnDef = wordObj.enDef ? wordObj.enDef.replace(/'/g, "\\'") : '';
@@ -2328,10 +2498,10 @@
                                         </div>
                                         <div class="ar-text">${wordObj.ar}</div>
                                     </div>
-                                    <div class="def-bottom-floor" id="${defBoxId}" onclick="event.stopPropagation(); speakSubBox('${safeEnDef}', '${defBoxId}', 'def-playing-highlight')">
+                                    <div class="def-bottom-floor" id="${defBoxId}" onclick="event.stopPropagation(); speakDef('${safeEnDef}', '${defBoxId}')">
                                         <div class="def-en-text">${wordObj.enDef}</div>
                                         <div class="def-ar-wrapper">
-                                            <button class="def-audio-btn" aria-label="Listen Definition" onclick="event.stopPropagation(); speakSubBox('${safeEnDef}', '${defBoxId}', 'def-playing-highlight')">
+                                            <button class="def-audio-btn" aria-label="Listen Definition" onclick="event.stopPropagation(); speakDef('${safeEnDef}', '${defBoxId}')">
                                                 <svg><use href="#icon-speaker"></use></svg>
                                             </button>
                                             <div class="def-ar-text">${wordObj.arDef}</div>
@@ -2358,7 +2528,7 @@
                     return colHtml;
                 };
 
-                if (isDefSection || isSynAntSection) {
+                if (isDefSection) {
                     htmlContent += buildColumn(section.words, 0);
                 } else {
                     const midpoint = Math.ceil(section.words.length / 2);
