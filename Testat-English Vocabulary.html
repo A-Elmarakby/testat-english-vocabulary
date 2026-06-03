@@ -41,6 +41,14 @@
             --row-hover: #f1e6f5;
             --text-grey: #555555;
             --border-color: #eeeeee;
+            
+            /* Definition Section Controls */
+            --def-word-size: 16px;
+            --def-word-color: var(--brand-dark);
+            --def-trans-size: 16px;
+            --def-trans-color: #444444;
+            --def-en-size: 16px;
+            --def-ar-size: 15px;
         }
 
         /* * HEADER STYLES */
@@ -613,7 +621,201 @@
                 text-align: center;
                 align-items: center;
             }
+            /* Stack definitions vertically on mobile screens */
+            .def-bottom-floor {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+                border-right: 3px solid var(--brand-purple); /* Keep border on mobile */
+            }
+            .def-ar-wrapper {
+                width: 100%;
+                justify-content: space-between;
+                flex-direction: row-reverse; /* Icon on left, text on right */
+            }
+            .def-en-text { text-align: left !important; }
+            .def-ar-text { text-align: right !important; }
         }
+
+        /* =========================================================
+           WORDS & DEFINITIONS SECTION (Independent Cards Layout)
+           ========================================================= */
+        /* Flex container to create space between cards */
+        .vocab-grid.single-column {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            padding: 16px;
+            background-color: rgba(92, 0, 122, 0.02); /* Very light background */
+            border-radius: 12px;
+        }
+        
+        .vocab-grid.single-column .vocab-col:first-child {
+            border: none;
+        }
+        
+        /* Remove internal borders from vocab-col */
+        .vocab-grid.single-column .vocab-col {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        /* Card styles */
+        .vocab-row.def-row-wrapper {
+            flex-direction: column;
+            align-items: stretch;
+            padding: 16px 20px; 
+            gap: 14px; 
+            background: #ffffff;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 12px rgba(92, 0, 122, 0.04);
+            margin: 0;
+            transition: all 0.3s ease;
+        }
+
+        /* Hover effect */
+        .vocab-row.def-row-wrapper:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(92, 0, 122, 0.1);
+            background: #ffffff; /* Prevent default hover color */
+            border: 1px solid var(--brand-orange);
+        }
+
+        /* Play active effect */
+        .vocab-row.def-row-wrapper.playing-highlight {
+            transform: scale(1.02);
+            background-color: #fffcf8;
+            border: 1px solid var(--brand-orange);
+            /* Use inset shadow instead of border-left to prevent layout shift jitter */
+            box-shadow: inset 3px 0 0 var(--brand-orange), 0 12px 30px rgba(255, 102, 0, 0.15);
+        }
+
+        /* Top floor alignment */
+        .def-top-floor {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Center audio button and word together */
+        .def-top-floor .word-audio-wrapper {
+            width: auto;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        /* Center badge and word text */
+        .word-with-badge {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* Number badge styles (Square shape) */
+        .def-number-badge {
+            background-color: var(--brand-orange);
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 1000;
+            text-shadow:
+                1px 0 0 rgba(0,0,0,0.1),
+                -1px 0 0 rgba(0,0,0,0.1),
+                0 1px 0 rgba(0,0,0,0.1),
+                0 -1px 0 rgba(0,0,0,0.1);
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+            flex-shrink: 0; /* Prevent the square from shrinking */
+        }
+
+        .def-top-floor .en-text {
+            color: var(--def-word-color);
+            font-size: var(--def-word-size);
+            font-weight: bold;
+        }
+
+        .def-top-floor .ar-text {
+            color: var(--def-trans-color);
+            font-size: var(--def-trans-size);
+            font-weight: 600;
+        }
+
+        /* Bottom floor definition box */
+        .def-bottom-floor {
+            background-color: #f8f5fb; 
+            border-radius: 8px;
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            border: none;
+            border-right: 4px solid var(--brand-purple); 
+        }
+
+        .def-en-text {
+            font-family: 'Outfit', sans-serif;
+            color: #666666;
+            font-size: var(--def-en-size);
+            font-style: italic; 
+            flex: 1;
+            line-height: 1.6;
+        }
+
+        /* Align text and audio icon in definition box */
+        .def-ar-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+            justify-content: flex-end;
+        }
+
+        .def-ar-text {
+            font-family: 'Tajawal', sans-serif;
+            color: #555555;
+            text-align: right;
+            direction: rtl;
+            font-size: var(--def-ar-size);
+            font-weight: 600;
+            line-height: 1.6;
+        }
+
+        /* Mini audio button */
+        .def-audio-btn {
+            background: #f0e6f5;
+            border: none;
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--brand-purple);
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .def-audio-btn:hover {
+            background: var(--brand-purple);
+            color: #ffffff;
+            transform: scale(1.1);
+        }
+
+        .def-audio-btn svg {
+            width: 14px;
+            height: 14px;
+            fill: currentColor;
+        }
+
 
         /* =========================================================
            CTA SECTION
@@ -1568,8 +1770,44 @@
                     { en: "the loudest person", ar: "الشخص الأكثر ظهوراً - الأكثر شهرة" },
                     { en: "what's right", ar: "الصواب (الشيء الصحيح)" }
                 ]
-            }
-        ];
+            },
+            {
+                sectionTitleEn: "Words and their Definitions",
+                sectionTitleAr: "الكلمات وتعريفها",
+                words: [
+                { 
+                    en: "background", 
+                    ar: "خلفية - أصل - نشأة",
+                    enDef: "where someone comes from",
+                    arDef: "الأصل الذي نشأ منه شخص ما أو الخلفية التي تربى فيها"
+                },
+                { 
+                    en: "value", 
+                    ar: "يقدر - يثمن - يعطي أهمية لـ",
+                    enDef: "to have a high opinion of someone or something",
+                    arDef: "أن يكون لديك رأي جيد في شخص ما أو شيء ما"
+                },
+                { 
+                    en: "popularity", 
+                    ar: "شهرة - انتشار",
+                    enDef: "being famous",
+                    arDef: "أن يكون شيء أو شخص مشهور ومعروف"
+                },
+                { 
+                    en: "self-discovery", 
+                    ar: "اكتشاف الذات",
+                    enDef: "to learn more about who you are",
+                    arDef: "اكتشاف الذات يعني أن تتعلم المزيد عن هويتك الحقيقية"
+                },
+                { 
+                    en: "unique", 
+                    ar: "فريد من نوعه - متميز للغاية",
+                    enDef: "being the only one of its kind",
+                    arDef: "كونه الوحيد من نوعه أو لا مثيل له"
+                }
+            ]
+        }
+    ];
 
         /**
          * CORE FUNCTIONS
@@ -1799,36 +2037,79 @@
                                 <i class="fas fa-play"></i> استمع للكل
                             </button>
                         </div>
-                        <div class="vocab-grid">
                 `;
 
-                const midpoint = Math.ceil(section.words.length / 2);
-                const col1 = section.words.slice(0, midpoint);
-                const col2 = section.words.slice(midpoint);
+                // Smart Check: Does this section have definitions?
+                const isDefSection = section.words.length > 0 && section.words[0].enDef !== undefined;
+                
+                // Apply single column class if it's a definition section
+                const gridClass = isDefSection ? "vocab-grid single-column" : "vocab-grid";
+                htmlContent += `<div class="${gridClass}">`;
 
                 const buildColumn = (wordsArray, globalWordIndexOffset) => {
                     let colHtml = '<div class="vocab-col">';
                     wordsArray.forEach((wordObj, i) => {
                         const safeEnWord = wordObj.en.replace(/'/g, "\\'");
                         const rowId = `row-${sectionIndex}-${globalWordIndexOffset + i}`;
-                        colHtml += `
-                            <div class="vocab-row" id="${rowId}" onclick="speakWord('${safeEnWord}', '${rowId}')">
-                                <div class="word-audio-wrapper">
-                                    <span class="en-text">${wordObj.en}</span>
-                                    <button class="audio-btn" aria-label="Listen">
-                                        <svg><use href="#icon-speaker"></use></svg>
-                                    </button>
+                        
+                        if (isDefSection) {
+                            // Auto-generate a two-digit serial number (e.g., 01, 02)
+                            const serialNumber = String(i + 1).padStart(2, '0');
+                            const safeEnDef = wordObj.enDef ? wordObj.enDef.replace(/'/g, "\\'") : '';
+                            
+                            colHtml += `
+                                <div class="vocab-row def-row-wrapper" id="${rowId}" onclick="speakWord('${safeEnWord}', '${rowId}')">
+                                    <div class="def-top-floor">
+                                        <div class="word-audio-wrapper">
+                                            <div class="word-with-badge">
+                                                <span class="def-number-badge">${serialNumber}</span>
+                                                <span class="en-text">${wordObj.en}</span>
+                                            </div>
+                                            <button class="audio-btn" aria-label="Listen">
+                                                <svg><use href="#icon-speaker"></use></svg>
+                                            </button>
+                                        </div>
+                                        <div class="ar-text">${wordObj.ar}</div>
+                                    </div>
+                                    <div class="def-bottom-floor">
+                                        <div class="def-en-text">${wordObj.enDef}</div>
+                                        <div class="def-ar-wrapper">
+                                            <button class="def-audio-btn" onclick="event.stopPropagation(); speakWord('${safeEnDef}')" aria-label="Listen Definition">
+                                                <svg><use href="#icon-speaker"></use></svg>
+                                            </button>
+                                            <div class="def-ar-text">${wordObj.arDef}</div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="ar-text">${wordObj.ar}</div>
-                            </div>
-                        `;
+                            `;
+                        } else {
+                            // Standard Layout (2 columns)
+                            colHtml += `
+                                <div class="vocab-row" id="${rowId}" onclick="speakWord('${safeEnWord}', '${rowId}')">
+                                    <div class="word-audio-wrapper">
+                                        <span class="en-text">${wordObj.en}</span>
+                                        <button class="audio-btn" aria-label="Listen">
+                                            <svg><use href="#icon-speaker"></use></svg>
+                                        </button>
+                                    </div>
+                                    <div class="ar-text">${wordObj.ar}</div>
+                                </div>
+                            `;
+                        }
                     });
                     colHtml += '</div>';
                     return colHtml;
                 };
 
-                htmlContent += buildColumn(col1, 0);
-                htmlContent += buildColumn(col2, col1.length);
+                if (isDefSection) {
+                    htmlContent += buildColumn(section.words, 0);
+                } else {
+                    const midpoint = Math.ceil(section.words.length / 2);
+                    const col1 = section.words.slice(0, midpoint);
+                    const col2 = section.words.slice(midpoint);
+                    htmlContent += buildColumn(col1, 0);
+                    htmlContent += buildColumn(col2, col1.length);
+                }
 
                 htmlContent += `
                         </div>
