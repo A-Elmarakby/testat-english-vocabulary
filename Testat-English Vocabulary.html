@@ -43,7 +43,7 @@
             --border-color: #eeeeee;
             
             /* Definition Section Controls */
-            --def-word-size: 16px;
+            --def-word-size: 20px;
             --def-word-color: var(--brand-dark);
             --def-trans-size: 16px;
             --def-trans-color: #444444;
@@ -64,6 +64,11 @@
             --ant-border: #e74c3c;
             --ant-hover-bg: rgba(231, 76, 60, 0.15); /* Antonym hover */
             --ant-active-bg: rgba(231, 76, 60, 0.25); /* Antonym active playing */
+            
+            /* Synonyms & Antonyms Font Sizes */
+            --syn-ant-label-size: 12px; /* For the small label (e.g., Synonyms | المرادفات) */
+            --syn-ant-en-size: 15px; /* For the English word */
+            --syn-ant-ar-size: 15px; /* For the Arabic translation */
         }
 
         /* * HEADER STYLES */
@@ -883,7 +888,7 @@
 
         /* Micro Labels (Synonyms / Antonyms) */
         .syn-ant-label {
-            font-size: 12px;
+            font-size: var(--syn-ant-label-size);
             font-weight: 800;
             text-transform: uppercase;
             display: flex;
@@ -913,7 +918,7 @@
         .syn-ant-en {
             font-weight: 700;
             color: var(--brand-dark);
-            font-size: 15px;
+            font-size: var(--syn-ant-en-size);
             word-break: break-word;
         }
 
@@ -921,7 +926,7 @@
             font-family: 'Tajawal', sans-serif;
             font-weight: 600;
             color: #555555;
-            font-size: 14px;
+            font-size: var(--syn-ant-ar-size);
             word-break: break-word;
         }
 
