@@ -26,50 +26,70 @@
         body {
             font-family: 'DIN Next LT Arabic', 'DIN', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             /* Darker background to make white cards stand out and look 3D */
-            background-color: #e5dfea; 
+            background-color: var(--bg-color); 
         }
 
-        /* * CSS VARIABLES 
-         * Managing the color palette for a vibrant, app-like feel.
-         */
-        :root {
-            --brand-purple: #5c007a;
-            --brand-dark: #38014e;
-            --brand-orange: #ff6600;
-            --card-bg: #ffffff;
-            --row-even: #f2f1f3;
-            --row-hover: #f1e6f5;
-            --text-grey: #555555;
-            --border-color: #eeeeee;
-            
-            /* Definition Section Controls */
-            --def-word-size: 20px;
-            --def-word-color: var(--brand-dark);
-            --def-trans-size: 16px;
-            --def-trans-color: #444444;
-            --def-en-size: 16px;
-            --def-ar-size: 15px;
-            
-            /* Section Card Controls (Definitions, Synonyms, Antonyms) */
-            --def-card-bg-even: #ffffff; /* Controls even card background */
-            --def-card-bg-odd:  #ffffff; /* Controls odd card background */
+/* =========================================
+   1. CSS DASHBOARD
+   ========================================= */
+:root {
+    /* --- MAIN COLORS --- */
+    --brand-purple: #5c007a; /* Main dark purple */
+    --brand-dark: #38014e;   /* Very dark purple */
+    --brand-orange: #ff6600; /* Main orange color */
+    --bg-color: #e5dfea;     /* App background color */
+    --text-grey: #555555;    /* Normal text color */
+    --border-color: #eeeeee; /* Border and divider color */
+    
+    /* --- TEXT SIZES --- */
+    /* Normal Words */
+    --word-en-size: 16px; /* English word size */
+    --word-ar-size: 16px; /* Arabic word size */
 
-            /* Synonyms & Antonyms Colors */
-            --syn-bg: rgba(46, 204, 113, 0.08); /* Light Green */
-            --syn-border: #2ecc71;
-            --syn-hover-bg: rgba(46, 204, 113, 0.15); /* Synonym hover */
-            --syn-active-bg: rgba(46, 204, 113, 0.25); /* Synonym active playing */
-            
-            --ant-bg: rgba(231, 76, 60, 0.08); /* Light Red */
-            --ant-border: #e74c3c;
-            --ant-hover-bg: rgba(231, 76, 60, 0.15); /* Antonym hover */
-            --ant-active-bg: rgba(231, 76, 60, 0.25); /* Antonym active playing */
-            
-            /* Synonyms & Antonyms Font Sizes */
-            --syn-ant-label-size: 12px; /* For the small label (e.g., Synonyms | المرادفات) */
-            --syn-ant-en-size: 15px; /* For the English word */
-            --syn-ant-ar-size: 15px; /* For the Arabic translation */
-        }
+    /* Definition Cards */
+    --def-word-size: 19px; /* Main English word size */
+    --def-trans-size: 16px; /* Arabic translation size next to the word */
+    --def-en-size: 16px; /* English definition text size */
+    --def-ar-size: 15px; /* Arabic definition text size */
+
+    /* Synonyms & Antonyms */
+    --syn-ant-label-size: 14px; /* Small heading text (Synonyms/Antonyms) */
+    --syn-ant-en-size: 16px; /* English text inside the box */
+    --syn-ant-ar-size: 15px; /* Arabic text inside the box */
+
+    /* --- BOX COLORS --- */
+    --card-bg: #ffffff; /* White background for main cards */
+    --def-card-bg-even: #ffffff; /* Even row background */
+    --def-card-bg-odd:  #ffffff; /* Odd row background */
+
+    /* Definition Box (Bottom Section) */
+    --def-box-bg: #f8f5fb;     /* Default background */
+    --def-box-hover: #f1e6f5;  /* Hover background */
+    --def-box-active: #fffcf8; /* Background while audio is playing */
+
+    /* Synonyms Box (Green) */
+    --syn-bg: rgba(46, 204, 113, 0.08); /* Default background */
+    --syn-border: #2ecc71; /* Top border color */
+    --syn-hover-bg: rgba(46, 204, 113, 0.15); /* Hover background */
+    --syn-active-bg: rgba(46, 204, 113, 0.25); /* Background while audio is playing */
+
+    /* Antonyms Box (Red) */
+    --ant-bg: rgba(231, 76, 60, 0.08); /* Default background */
+    --ant-border: #e74c3c; /* Top border color */
+    --ant-hover-bg: rgba(231, 76, 60, 0.15); /* Hover background */
+    --ant-active-bg: rgba(231, 76, 60, 0.25); /* Background while audio is playing */
+
+    /* --- AUDIO BUTTON --- */
+    --audio-btn-size: 32px; /* Width and height of the circle */
+    --audio-icon-size: 15px; /* Size of the speaker icon inside */
+    --audio-btn-bg: #f0e6f5; /* Default background */
+    --audio-btn-color: var(--brand-purple); /* Icon color */
+    
+    /* --- SHAPES & BORDERS --- */
+    --radius-small: 6px;  /* Small border radius (number badge) */
+    --radius-medium: 8px; /* Medium border radius (inner boxes) */
+    --radius-large: 12px; /* Large border radius (outer cards) */
+}
 
         /* * HEADER STYLES */
         .main-header {
@@ -312,18 +332,18 @@
             background-color: var(--row-hover);
         }
 
-        /* * TYPOGRAPHY & AUDIO BUTTON */
+    /* * TYPOGRAPHY & AUDIO BUTTON */
         .en-text { 
             color: var(--brand-dark); 
             font-weight: bold; 
-            font-size: 16px;
+            font-size: var(--word-en-size);
         }
         
         .ar-text { 
-            color: #444444; 
+            color: var(--text-grey); 
             text-align: right; 
             direction: rtl; 
-            font-size: 16px;
+            font-size: var(--word-ar-size);
             font-weight: 600;
         }
 
@@ -334,30 +354,31 @@
             width: 160px;
         }
 
-        .audio-btn {
-            background: #f0e6f5;
+        /* Shared Audio Button Styles */
+        .audio-btn, .def-audio-btn {
+            background: var(--audio-btn-bg);
             border: none;
             cursor: pointer;
-            width: 32px;
-            height: 32px;
+            width: var(--audio-btn-size);
+            height: var(--audio-btn-size);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--brand-purple);
+            color: var(--audio-btn-color);
             transition: all 0.2s ease;
             flex-shrink: 0;
         }
 
-        .audio-btn:hover {
+        .audio-btn:hover, .def-audio-btn:hover {
             background: var(--brand-purple);
             color: #ffffff;
             transform: scale(1.1);
         }
 
-        .audio-btn svg {
-            width: 16px;
-            height: 16px;
+        .audio-btn svg, .def-audio-btn svg {
+            width: var(--audio-icon-size);
+            height: var(--audio-icon-size);
             fill: currentColor;
         }
 
@@ -668,22 +689,19 @@
             flex-direction: column;
             gap: 16px;
             padding: 16px;
-            background-color: rgba(92, 0, 122, 0.02); /* Very light background */
-            border-radius: 12px;
+            background-color: rgba(92, 0, 122, 0.02);
+            border-radius: var(--radius-large);
         }
         
-        .vocab-grid.single-column .vocab-col:first-child {
-            border: none;
-        }
+        .vocab-grid.single-column .vocab-col:first-child { border: none; }
         
-        /* Remove internal borders from vocab-col */
         .vocab-grid.single-column .vocab-col {
             display: flex;
             flex-direction: column;
             gap: 16px;
         }
 
-        /* Card styles (Custom background colors to prevent zebra-striping conflicts) */
+        /* Card styles */
         .vocab-col .vocab-row.def-row-wrapper:nth-child(even) { background-color: var(--def-card-bg-even); }
         .vocab-col .vocab-row.def-row-wrapper:nth-child(odd) { background-color: var(--def-card-bg-odd); }
 
@@ -692,7 +710,7 @@
             align-items: stretch;
             padding: 16px 20px; 
             gap: 14px; 
-            border-radius: 12px;
+            border-radius: var(--radius-large);
             border: 1px solid rgba(0, 0, 0, 0.05);
             box-shadow: 0 4px 12px rgba(92, 0, 122, 0.04);
             margin: 0;
@@ -709,13 +727,12 @@
         /* Play active effect */
         .vocab-col .vocab-row.def-row-wrapper.playing-highlight {
             transform: scale(1.02);
-            background-color: #fffcf8 !important;
+            background-color: var(--def-box-active) !important;
             border: 1px solid var(--brand-orange);
-            /* Use inset shadow instead of border-left to prevent layout shift jitter */
             box-shadow: inset 3px 0 0 var(--brand-orange), 0 12px 30px rgba(255, 102, 0, 0.15);
         }
 
-        /* Fluid Flex Layout for Cards (Allows natural expansion) */
+        /* Fluid Flex Layout for Cards */
         .def-top-floor, .def-bottom-floor {
             display: flex;
             justify-content: space-between;
@@ -723,7 +740,6 @@
             gap: 15px;
         }
 
-        /* Group badge, word, and icon together */
         .word-with-badge {
             display: flex;
             align-items: flex-start;
@@ -738,29 +754,24 @@
             flex-wrap: wrap;
         }
 
-        /* Number badge styles (Square shape) */
+        /* Number badge styles */
         .def-number-badge {
             background-color: var(--brand-orange);
             color: #ffffff;
             font-size: 14px;
             font-weight: 1000;
-            text-shadow:
-                1px 0 0 rgba(0,0,0,0.1),
-                -1px 0 0 rgba(0,0,0,0.1),
-                0 1px 0 rgba(0,0,0,0.1),
-                0 -1px 0 rgba(0,0,0,0.1);
+            text-shadow: 1px 0 0 rgba(0,0,0,0.1), -1px 0 0 rgba(0,0,0,0.1), 0 1px 0 rgba(0,0,0,0.1), 0 -1px 0 rgba(0,0,0,0.1);
             width: 28px;
             height: 28px;
-            border-radius: 6px;
+            border-radius: var(--radius-small);
             display: inline-flex;
             align-items: center;
             justify-content: center;
             line-height: 1;
             flex-shrink: 0; 
-            margin-top: -2px; /* Optical alignment */
+            margin-top: -2px; 
         }
 
-        /* Text styling with word-wrap to prevent overflow */
         .def-top-floor .en-text {
             color: var(--def-word-color);
             font-size: var(--def-word-size);
@@ -784,26 +795,22 @@
 
         /* Bottom floor definition box */
         .def-bottom-floor {
-            background-color: #f8f5fb; 
-            border-radius: 8px;
+            background-color: var(--def-box-bg); 
+            border-radius: var(--radius-medium);
             padding: 16px 20px;
             border: none;
             border-right: 4px solid var(--brand-purple); 
             transition: all 0.3s ease;
-            cursor: pointer; /* Indicates it's clickable */
+            cursor: pointer; 
         }
 
-        /* Hover effect for definition box */
-        .def-bottom-floor:hover {
-            background-color: #f1e6f5;
-        }
+        .def-bottom-floor:hover { background-color: var(--def-box-hover); }
 
-        /* Active highlight specifically for definition box (Persists while playing) */
         .def-bottom-floor.def-playing-highlight {
-            background-color: #fffcf8;
+            background-color: var(--def-box-active);
             box-shadow: inset 3px 0 0 var(--brand-orange), 0 8px 20px rgba(255, 102, 0, 0.15);
             border-right: 4px solid var(--brand-orange);
-            transform: scale(1.02); /* Simulates sustained hover lift */
+            transform: scale(1.02); 
         }
 
         .def-en-text {
@@ -826,20 +833,30 @@
             flex: 1;
         }
 
+        .def-ar-text {
+            font-family: 'Tajawal', sans-serif;
+            color: #555555;
+            text-align: right;
+            direction: rtl;
+            font-size: var(--def-ar-size);
+            font-weight: 600;
+            line-height: 1.6;
+            word-break: break-word;
+            overflow-wrap: break-word;
+        }
+
         /* =========================================================
            SYNONYMS & ANTONYMS SECTION (Split Layout)
            ========================================================= */
-        /* Container for the two halves */
         .syn-ant-container {
             display: flex;
             gap: 16px;
             margin-top: 4px;
         }
 
-        /* Shared styles for both boxes */
         .syn-box, .ant-box {
             flex: 1;
-            border-radius: 8px;
+            border-radius: var(--radius-medium);
             padding: 16px;
             display: flex;
             flex-direction: column;
@@ -848,45 +865,39 @@
             transition: all 0.3s ease;
         }
 
-        /* Specific styles for Synonyms */
+        /* Synonyms Box */
         .syn-box {
             background-color: var(--syn-bg);
             border-top: 3px solid var(--syn-border);
         }
-        .syn-box:hover {
-            background-color: var(--syn-hover-bg);
-        }
+        .syn-box:hover { background-color: var(--syn-hover-bg); }
         .syn-box.syn-playing-highlight {
             background-color: var(--syn-active-bg);
             transform: scale(1.02);
             box-shadow: inset 4px 0 0 var(--syn-border), 0 8px 20px rgba(46, 204, 113, 0.2);
         }
-        /* Highlight the audio button inside Synonyms when playing */
         .syn-box.syn-playing-highlight .def-audio-btn {
             background-color: var(--syn-border);
             color: #ffffff;
         }
 
-        /* Specific styles for Antonyms */
+        /* Antonyms Box */
         .ant-box {
             background-color: var(--ant-bg);
             border-top: 3px solid var(--ant-border);
         }
-        .ant-box:hover {
-            background-color: var(--ant-hover-bg);
-        }
+        .ant-box:hover { background-color: var(--ant-hover-bg); }
         .ant-box.ant-playing-highlight {
             background-color: var(--ant-active-bg);
             transform: scale(1.02);
             box-shadow: inset 4px 0 0 var(--ant-border), 0 8px 20px rgba(231, 76, 60, 0.2);
         }
-        /* Highlight the audio button inside Antonyms when playing */
         .ant-box.ant-playing-highlight .def-audio-btn {
             background-color: var(--ant-border);
             color: #ffffff;
         }
 
-        /* Micro Labels (Synonyms / Antonyms) */
+        /* Labels & Texts inside Split Boxes */
         .syn-ant-label {
             font-size: var(--syn-ant-label-size);
             font-weight: 800;
@@ -897,10 +908,9 @@
             opacity: 0.8;
             margin-bottom: 4px;
         }
-        .syn-box .syn-ant-label { color: #27ae60; }
-        .ant-box .syn-ant-label { color: #c0392b; }
+        .syn-box .syn-ant-label { color: var(--syn-border); }
+        .ant-box .syn-ant-label { color: var(--ant-border); }
 
-        /* Align text and audio inside the split boxes */
         .syn-ant-content {
             display: flex;
             justify-content: space-between;
@@ -925,40 +935,10 @@
         .syn-ant-ar {
             font-family: 'Tajawal', sans-serif;
             font-weight: 600;
-            color: #555555;
+            color: var(--text-grey);
             font-size: var(--syn-ant-ar-size);
             word-break: break-word;
         }
-
-        /* Mini audio button */
-        .def-audio-btn {
-            background: #f0e6f5;
-            border: none;
-            cursor: pointer;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--brand-purple);
-            transition: all 0.2s ease;
-            flex-shrink: 0;
-        }
-
-        .def-audio-btn:hover {
-            background: var(--brand-purple);
-            color: #ffffff;
-            transform: scale(1.1);
-        }
-
-        .def-audio-btn svg {
-            width: 14px;
-            height: 14px;
-            fill: currentColor;
-        }
-
-
         /* =========================================================
            CTA SECTION
            ========================================================= */
