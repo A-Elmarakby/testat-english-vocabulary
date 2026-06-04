@@ -441,6 +441,24 @@
             color: #ffffff;
         }
 
+        /* * FOOTER STYLES */
+        .main-footer {
+            background: #0d0015;
+            color: white;
+            margin-top: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-content p { margin: 0; font-size: 15px; }
 
         .cta-button {
             background: var(--brand-orange);
@@ -1506,9 +1524,10 @@
         .cta-social-orb.yt { background: linear-gradient(135deg, #c62828, #e53935); }
         .cta-social-orb.ig { background: linear-gradient(135deg, #c2185b, #e91e8c); }
 
-/* =========================================================
-   FOOTER SECTION — IMPROVED
-   ========================================================= */
+        /* =========================================================
+           FOOTER SECTION
+           ========================================================= */
+        /* ══════════ FOOTER — IMPROVED ══════════ */
         .main-footer {
             background: #0d0015;
             border-top: 1px solid rgba(255,255,255,0.06);
@@ -1563,11 +1582,6 @@
 
         .footer-brand-name span { color: #ff6600; }
 
-/* Footer Logo Set a good logo size for the footer. */
-#footer-logo-link img {
-    max-height: 22px;
-    display: block;
-}
         .footer-brand-tag {
             font-size: 12px;
             color: rgba(255,255,255,0.35);
@@ -1605,12 +1619,8 @@
         .footer-social-mini a:hover {
             background: rgba(255, 102, 0, 0.15);
             border-color: rgba(255,102,0,0.4);
-            color: #ffffff; /* Text stays white */
+            color: #ff6600;
             transform: translateY(-2px);
-        }
-
-        .footer-social-mini a:hover svg {
-            color: #ff6600; /* SVG icon turns orange */
         }
 
         /* Bottom row: links + copyright */
@@ -1656,6 +1666,24 @@
             direction: ltr;
             white-space: nowrap;
         }
+
+        .footer-bottom-bar {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 30px 24px;
+            border-top: 1px solid rgba(255,255,255,0.04);
+            padding-top: 18px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .footer-bottom-text {
+            font-size: 11px;
+            color: rgba(255,255,255,0.15);
+            direction: rtl;
+            text-align: center;
+        }
+
 /* =========================================================
    MOBILE DESIGN ONLY
    Screens smaller than 768px
@@ -1906,7 +1934,6 @@
         display: none;
     }
 
-    /* Footer Mobile Adjustments */
     .footer-inner {
         padding: 28px 20px 18px;
     }
@@ -1918,36 +1945,20 @@
         gap: 16px;
     }
 
-    .footer-brand {
-    align-items: center; /* Center logo and text */
-}
+    .footer-social-mini {
+        justify-content: center;
+    }
 
-.footer-social-groups {
-    align-items: center;
-}
+    .footer-bottom {
+        flex-direction: column-reverse;
+        align-items: center;
+        text-align: center;
+        gap: 10px;
+    }
 
-.footer-social-mini {
-    justify-content: center;
-}
-
-.footer-bottom {
-    flex-direction: column; /* Move footer info to bottom */
-    align-items: center;
-    text-align: center;
-    gap: 14px;
-}
-
-.footer-links-row {
-    justify-content: center;
-}
-
-/* Hide links gradually on very small screens */
-@media (max-width: 480px) {
-    .hide-terms { display: none !important; }
-}
-
-@media (max-width: 380px) {
-    .hide-privacy { display: none !important; }
+    .footer-links-row {
+        justify-content: center;
+    }
 }
     </style>
 </head>
@@ -1980,15 +1991,6 @@
                         <rect x="6" y="2" width="12" height="20" rx="2"></rect> 
                         <path d="M11.95 18H12.05"></path> 
                     </g>
-        </symbol>
-        <symbol id="icon-x-twitter" viewBox="0 0 512 512">
-            <path fill="currentColor" d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/>
-        </symbol>
-        <symbol id="icon-tiktok" viewBox="0 0 448 512">
-            <path fill="currentColor" d="M448,209.91a210.06,210.06,0,0,1-122.77-39.25V349.38A162.55,162.55,0,1,1,185,188.31V278.2a74.62,74.62,0,1,0,52.23,71.18V0l88,0a121.18,121.18,0,0,0,1.86,22.17h0A122.18,122.18,0,0,0,381,102.39a121.43,121.43,0,0,0,67,20.14Z"/>
-        </symbol>
-        <symbol id="icon-whatsapp" viewBox="0 0 448 512">
-            <path fill="currentColor" d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zM223.9 415.6c-32.9 0-65.1-8.8-93.3-25.5l-6.7-4-69.4 18.2 18.6-67.7-4.4-7c-18.3-29.2-28-63-28-97.7 0-101.4 82.5-183.9 184-183.9 49.2 0 95.3 19.2 130 54 34.7 34.8 53.8 81 53.8 130.3 0 101.4-82.5 183.9-183.9 183.9zm101.3-138.4c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3s19.9 53.7 22.6 57.4c2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
                 </symbol>
     </svg>
 
@@ -2189,37 +2191,37 @@
     <footer class="main-footer">
         <div class="footer-inner">
 
+            <!-- Top: brand + social pills -->
             <div class="footer-top">
                 <div class="footer-brand">
-                    <a href="https://testat-app.com" id="footer-logo-link" style="display: block;"></a>
+                    <div class="footer-brand-name">تستات <span>Testat</span></div>
                     <div class="footer-brand-tag">تجربة تعليمية علمية متكاملة</div>
                 </div>
 
                 <div class="footer-social-mini">
-
-                    <a href="#" target="_blank" title="X (Twitter)">
-                        <svg><use href="#icon-x-twitter"></use></svg>
-                        تويتر
+                    <a href="https://www.facebook.com/testatapp" target="_blank" title="Facebook">
+                        <svg><use href="#icon-facebook"></use></svg>
+                        فيسبوك
                     </a>
-                    <a href="#" target="_blank" title="TikTok">
-                        <svg><use href="#icon-tiktok"></use></svg>
-                        تيك توك
+                    <a href="http://youtube.com/@testatapp" target="_blank" title="YouTube">
+                        <svg><use href="#icon-youtube"></use></svg>
+                        يوتيوب
                     </a>
-                    <a href="#" target="_blank" title="WhatsApp">
-                        <svg><use href="#icon-whatsapp"></use></svg>
-                        واتساب
+                    <a href="https://www.instagram.com/testat_app/" target="_blank" title="Instagram">
+                        <svg><use href="#icon-instagram"></use></svg>
+                        إنستاغرام
                     </a>
- 
                 </div>
             </div>
 
+            <!-- Bottom: links + copyright -->
             <div class="footer-bottom">
                 <div class="footer-links-row">
-                   <a href="https://testat-app.com/" target="_blank">الموقع الرسمي</a>
-                    <span class="dot hide-privacy">·</span>
-                    <a href="#" class="hide-privacy">سياسة الخصوصية</a>
-                    <span class="dot hide-terms">·</span>
-                    <a href="#" class="hide-terms">الشروط والأحكام</a>
+                    <a href="https://testat-app.com/" target="_blank">الموقع الرسمي</a>
+                    <span class="dot">·</span>
+                    <a href="#">سياسة الخصوصية</a>
+                    <span class="dot">·</span>
+                    <a href="#">الشروط والأحكام</a>
                     <span class="dot">·</span>
                     <a href="#">اتصل بنا</a>
                 </div>
@@ -2979,22 +2981,11 @@
             });
         }
 
-        // Smart clone function to avoid Base64 duplication
-        function cloneHeaderLogoToFooter() {
-            const headerLogoImg = document.querySelector('.header-logo img');
-            const footerLogoLink = document.getElementById('footer-logo-link');
-            if (headerLogoImg && footerLogoLink) {
-                const clonedImg = headerLogoImg.cloneNode(true);
-                footerLogoLink.appendChild(clonedImg);
-            }
-        }
-
         // Initialize everything cleanly when DOM is fully loaded
         document.addEventListener('DOMContentLoaded', () => {
             renderLesson();
             initCTAStars();
             initWebsiteButtonEffects();
-            cloneHeaderLogoToFooter();
         });
 
     </script>
