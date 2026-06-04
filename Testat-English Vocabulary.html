@@ -956,7 +956,7 @@
         /* Orange radial glow behind phone */
         .cta-glow-right {
             position: absolute;
-            right: -60px;
+            right: 10px;
             top: 50%;
             transform: translateY(-50%);
             width: 500px;
@@ -972,7 +972,7 @@
             bottom: -100px;
             width: 400px;
             height: 400px;
-            background: radial-gradient(circle, rgba(92,0,122,0.35) 0%, transparent 65%);
+            background: radial-gradient(circle, rgba(116, 16, 150, 0.35) 0%, transparent 65%);
             pointer-events: none;
             z-index: 0;
         }
@@ -996,22 +996,7 @@
             gap: 22px;
         }
 
-        .cta-eyebrow {
-            display: none; /* Hidden on Desktop */
-            align-items: center;
-            gap: 8px;
-            background: rgba(255,102,0,0.12);
-            border: 1px solid rgba(255,102,0,0.35);
-            color: #ff8533;
-            font-size: 13px;
-            font-weight: 700;
-            padding: 7px 16px;
-            border-radius: 40px;
-            width: fit-content;
-            direction: rtl;
-            letter-spacing: 0.03em;
-            animation: cta-badge-pulse 3s ease-in-out infinite;
-        }
+
 
         @keyframes cta-badge-pulse {
             0%, 100% { box-shadow: 0 0 0 0 rgba(255,102,0,0); }
@@ -1032,7 +1017,8 @@
 
         .cta-sub {
             font-size: 16px;
-            color: rgba(255,255,255,0.55);
+            font-weight: 400;
+            color: rgb(204, 204, 204);
             line-height: 1.75;
             direction: rtl;
             margin: 0;
@@ -1083,52 +1069,53 @@
         .cta-store-btn {
             display: flex;
             align-items: center;
-            justify-content: center; /* Center content on mobile */
-            flex-grow: 1; /* Stretch smoothly to fill empty space on PC */
-            gap: 12px;
-            padding: 13px 20px;
-            border-radius: 14px;
+            justify-content: center;
+            flex-grow: 1; 
+            gap: 10px;
+            padding: 10px 16px;
+            border-radius: 12px;
             text-decoration: none;
             color: #fff;
             font-family: inherit;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            min-width: 155px;
+            min-width: 140px;
             border: 1px solid rgba(255,255,255,0.1);
+            direction: ltr; /* Force SVG to the left */
         }
 
         .cta-store-btn.gplay {
             background: linear-gradient(135deg, #341145, #4e1a6a);
-            box-shadow: 0 8px 24px rgba(92,0,122,0.4);
+            box-shadow: 0 6px 18px rgba(92,0,122,0.3);
         }
 
         .cta-store-btn.astore {
             background: linear-gradient(135deg, #141428, #2a2a45);
-            box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.35);
         }
 
         .cta-store-btn.huawei {
             background: linear-gradient(135deg, #b82828, #d94040);
-            box-shadow: 0 8px 24px rgba(180,40,40,0.4);
+            box-shadow: 0 6px 18px rgba(180,40,40,0.3);
         }
 
         .cta-store-btn:hover {
-            transform: translateY(-4px) scale(1.03);
-            box-shadow: 0 14px 32px rgba(0,0,0,0.5);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 10px 24px rgba(0,0,0,0.4);
         }
 
-        .cta-store-btn svg { width: 28px; height: 28px; flex-shrink: 0; }
+        .cta-store-btn svg { width: 22px; height: 22px; flex-shrink: 0; }
 
-        .cta-btn-text { display: flex; flex-direction: column; }
+        .cta-btn-text { display: flex; flex-direction: column; align-items: flex-end; }
         .cta-btn-text .small { 
-            font-size: 11px; 
+            font-size: 10px; 
             opacity: 0.75; 
-            align-self: flex-end; /* Align Arabic to Right */
+            align-self: flex-end; /* Align Arabic to the right */
         }
         .cta-btn-text strong { 
-            font-size: 15px; 
+            font-size: 14px; 
             font-weight: 700; 
-            align-self: flex-start; /* Align English to Left */
-            direction: ltr; /* Ensure English reads properly */
+            align-self: flex-end; /* Align English to the right */
+            direction: ltr;
         }
 
         /* ── PRIMARY WEBSITE CTA BUTTON ── */
@@ -1186,15 +1173,15 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 8px;
             width: 100%;
-            padding: 14px 24px; /* Reduced padding */
+            padding: 12px 20px;
             border-radius: 14px;
             background: linear-gradient(135deg, #ff4d00 0%, #ff6600 45%, #ff8c00 100%);
-            box-shadow: 0 6px 20px rgba(255,102,0,0.4), 0 2px 6px rgba(0,0,0,0.2);
+            box-shadow: 0 6px 16px rgba(255,102,0,0.4), 0 2px 6px rgba(0,0,0,0.2);
             color: #fff;
             font-family: inherit;
-            font-size: 15px; /* Reduced font size */
+            font-size: 14.5px;
             font-weight: 800;
             text-decoration: none;
             letter-spacing: 0.3px;
@@ -1202,11 +1189,18 @@
             cursor: pointer;
             border: none;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
+            animation: websiteBtnPulse 1.5s infinite ease-in-out;
+        }
+
+        @keyframes websiteBtnPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.03); }
         }
 
         .cta-website-btn:hover {
-            transform: translateY(-4px) scale(1.03);
-            box-shadow: 0 16px 40px rgba(255,102,0,0.7), 0 2px 8px rgba(0,0,0,0.3);
+            animation: none;
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 12px 30px rgba(255,102,0,0.6), 0 2px 8px rgba(0,0,0,0.3);
         }
         .cta-website-btn:active {
             transform: scale(0.97);
@@ -1231,7 +1225,7 @@
         }
 
         .cta-website-btn .btn-globe {
-            font-size: 22px;
+            font-size: 20px;
             animation: globeWiggle 2.5s ease-in-out infinite;
             display: inline-block;
         }
@@ -1242,7 +1236,7 @@
         }
 
         .cta-website-btn .btn-arrow {
-            font-size: 18px;
+            font-size: 16px;
             animation: arrowBounce 1.4s ease-in-out infinite;
             display: inline-block;
         }
@@ -1254,18 +1248,19 @@
         .cta-divider {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             width: 100%;
-            margin: 4px 0;
-            color: rgba(255,255,255,0.35);
-            font-size: 12px;
+            margin: 8px 0;
+            color: rgb(207, 207, 207);
+            font-size: 14px;
+            font-weight: bold;
         }
         .cta-divider::before,
         .cta-divider::after {
             content: '';
             flex: 1;
             height: 1px;
-            background: rgba(255,255,255,0.15);
+            background: rgba(255, 255, 255, 0.61);
         }
 
         .cta-social-proof {
@@ -1851,9 +1846,6 @@
     }
 
     /* --- 5. CTA & FOOTER --- */
-    .cta-eyebrow {
-        display: inline-flex; /* Show only on Mobile */
-    }
 
     .cta-inner {
         grid-template-columns: 1fr;
@@ -1874,10 +1866,32 @@
         font-size: 14px;
     }
 
-    .cta-stats,
-    .cta-store-btns {
+    .cta-stats {
         justify-content: center;
     }
+
+    /* Mobile Store Buttons
+   Keep the buttons side by side when possible.
+   If there is not enough space, move them to the next line. */
+.cta-store-btns {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+}
+
+.cta-store-btn {
+    width: auto;
+    max-width: unset;
+    min-width: 130px;
+    flex-grow: 1;
+    padding: 8px 12px;
+    border-radius: 10px;
+}
+
+    .cta-store-btn svg { width: 20px; height: 20px; flex-shrink: 0; }
+    .cta-btn-text strong { font-size: 13px; }
 
     .cta-phone-col {
         display: none;
@@ -1998,13 +2012,6 @@
             <!-- TEXT COLUMN -->
             <div class="cta-text-col">
 
-                <div class="cta-eyebrow">
-                    <svg width="14" height="14" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-                        <path d="M10 2L12.5 7.5L18 8.5L14 13L15 18.5L10 16L5 18.5L6 13L2 8.5L7.5 7.5L10 2Z" fill="#ff8533"/>
-                    </svg>
-                    ابدأ رحلتك التعليمية
-                </div>
-
                 <h2 class="cta-headline">
                     جاهز تختبر<br>
                     نفسك <span class="hl-orange"> بتستات</span>؟
@@ -2039,7 +2046,6 @@
                         <div class="cta-website-ring"></div>
                         <div class="cta-website-ring2"></div>
                         <a href="https://testat-app.com" target="_blank" class="cta-website-btn" id="websiteBtn">
-                            <span class="btn-globe">🚀</span>
                             ابدأ تجربتك التعليمية الآن — مجاناً
                             <span class="btn-arrow">↗</span>
                         </a>
