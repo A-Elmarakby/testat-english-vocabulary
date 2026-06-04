@@ -1083,7 +1083,9 @@
         .cta-store-btn {
             display: flex;
             align-items: center;
-            gap: 11px;
+            justify-content: center; /* Center content on mobile */
+            flex-grow: 1; /* Stretch smoothly to fill empty space on PC */
+            gap: 12px;
             padding: 13px 20px;
             border-radius: 14px;
             text-decoration: none;
@@ -1114,11 +1116,195 @@
             box-shadow: 0 14px 32px rgba(0,0,0,0.5);
         }
 
-        .cta-store-btn i { font-size: 28px; flex-shrink: 0; }
+        .cta-store-btn svg { width: 28px; height: 28px; flex-shrink: 0; }
 
-        .cta-btn-text { display: flex; flex-direction: column; text-align: left; }
-        .cta-btn-text .small { font-size: 11px; opacity: 0.75; }
-        .cta-btn-text strong { font-size: 15px; font-weight: 700; }
+        .cta-btn-text { display: flex; flex-direction: column; }
+        .cta-btn-text .small { 
+            font-size: 11px; 
+            opacity: 0.75; 
+            align-self: flex-end; /* Align Arabic to Right */
+        }
+        .cta-btn-text strong { 
+            font-size: 15px; 
+            font-weight: 700; 
+            align-self: flex-start; /* Align English to Left */
+            direction: ltr; /* Ensure English reads properly */
+        }
+
+        /* ── PRIMARY WEBSITE CTA BUTTON ── */
+        .cta-website-wrap {
+            position: relative;
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            margin-bottom: 6px;
+        }
+
+        .cta-website-wrap::before {
+            content: '';
+            position: absolute;
+            inset: -18px;
+            background: radial-gradient(ellipse at center, rgba(255,102,0,0.4) 0%, rgba(180,40,200,0.15) 55%, transparent 75%);
+            border-radius: 28px;
+            animation: websiteGlowPulse 4s ease-in-out infinite; /* Slowed down */
+            z-index: 0;
+            filter: blur(10px);
+        }
+
+        @keyframes websiteGlowPulse {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50%       { opacity: 0.8; transform: scale(1.05); }
+        }
+
+        .cta-website-ring {
+            position: absolute;
+            inset: -6px;
+            border-radius: 20px;
+            border: 2px solid rgba(255,102,0,0.4);
+            animation: websiteRing1 3.5s ease-out infinite; /* Slowed down */
+            z-index: 0;
+        }
+        .cta-website-ring2 {
+            position: absolute;
+            inset: -6px;
+            border-radius: 20px;
+            border: 2px solid rgba(255,102,0,0.2);
+            animation: websiteRing1 3.5s ease-out infinite 1.75s;
+            z-index: 0;
+        }
+
+        @keyframes websiteRing1 {
+            0%   { inset: -2px;  opacity: 0.8; }
+            100% { inset: -18px; opacity: 0; }
+        }
+
+        .cta-website-btn {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 14px 24px; /* Reduced padding */
+            border-radius: 14px;
+            background: linear-gradient(135deg, #ff4d00 0%, #ff6600 45%, #ff8c00 100%);
+            box-shadow: 0 6px 20px rgba(255,102,0,0.4), 0 2px 6px rgba(0,0,0,0.2);
+            color: #fff;
+            font-family: inherit;
+            font-size: 15px; /* Reduced font size */
+            font-weight: 800;
+            text-decoration: none;
+            letter-spacing: 0.3px;
+            overflow: hidden;
+            cursor: pointer;
+            border: none;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .cta-website-btn:hover {
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: 0 16px 40px rgba(255,102,0,0.7), 0 2px 8px rgba(0,0,0,0.3);
+        }
+        .cta-website-btn:active {
+            transform: scale(0.97);
+        }
+
+        .cta-website-btn::after {
+            content: '';
+            position: absolute;
+            top: -40%;
+            left: -70%;
+            width: 45%;
+            height: 180%;
+            background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.35) 50%, transparent 70%);
+            transform: skewX(-15deg);
+            animation: websiteShine 3s ease-in-out infinite 1.2s;
+        }
+
+        @keyframes websiteShine {
+            0%   { left: -70%; opacity: 1; }
+            60%  { left: 130%; opacity: 1; }
+            100% { left: 130%; opacity: 0; }
+        }
+
+        .cta-website-btn .btn-globe {
+            font-size: 22px;
+            animation: globeWiggle 2.5s ease-in-out infinite;
+            display: inline-block;
+        }
+        @keyframes globeWiggle {
+            0%, 100% { transform: rotate(0deg); }
+            25%       { transform: rotate(-12deg); }
+            75%       { transform: rotate(12deg); }
+        }
+
+        .cta-website-btn .btn-arrow {
+            font-size: 18px;
+            animation: arrowBounce 1.4s ease-in-out infinite;
+            display: inline-block;
+        }
+        @keyframes arrowBounce {
+            0%, 100% { transform: translate(0,0); }
+            50%       { transform: translate(3px,-3px); }
+        }
+
+        .cta-divider {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            margin: 4px 0;
+            color: rgba(255,255,255,0.35);
+            font-size: 12px;
+        }
+        .cta-divider::before,
+        .cta-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(255,255,255,0.15);
+        }
+
+        .cta-social-proof {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: rgba(255,255,255,0.55);
+            direction: rtl;
+        }
+        .cta-social-proof .avatars {
+            display: flex;
+        }
+        .cta-social-proof .avatars span {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.15);
+            margin-left: -6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #4e1a6a, #341145);
+        }
+        .cta-social-proof .avatars span:first-child { margin-left: 0; }
+
+        .cta-particle {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            animation: particleFly 0.8s ease-out forwards;
+        }
+        @keyframes particleFly {
+            0%   { opacity: 1; transform: translate(0,0) scale(1); }
+            100% { opacity: 0; transform: translate(var(--tx), var(--ty)) scale(0.2); }
+        }
 
         /* Right phone column */
         .cta-phone-col {
@@ -1842,6 +2028,27 @@
 
                 <!-- Store buttons -->
                 <div class="cta-store-btns">
+
+                    <div class="cta-website-wrap">
+                        <div class="cta-website-ring"></div>
+                        <div class="cta-website-ring2"></div>
+                        <a href="https://testat-app.com" target="_blank" class="cta-website-btn" id="websiteBtn">
+                            <span class="btn-globe">🚀</span>
+                            ابدأ تجربتك التعليمية الآن — مجاناً
+                            <span class="btn-arrow">↗</span>
+                        </a>
+                        <div class="cta-social-proof">
+                            <div class="avatars">
+                                <span><svg width="12" height="12" viewBox="0 0 24 24" fill="#e0c8f0"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></span>
+                                <span><svg width="12" height="12" viewBox="0 0 24 24" fill="#e0c8f0"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></span>
+                                <span><svg width="12" height="12" viewBox="0 0 24 24" fill="#e0c8f0"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></span>
+                            </div>
+                            يدرس معنا أكثر من <strong style="color:#ff8533; margin: 0 4px;">+1,000,000</strong> طالب
+                        </div>
+                    </div>
+
+                    <div class="cta-divider">أو حمّل التطبيق مباشرة</div>
+
                     <a href="https://play.google.com/store/apps/details?id=co.itplus.testatapp" target="_blank" class="cta-store-btn gplay">
                         <svg fill="currentColor" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" width="22" height="22" style="flex-shrink: 0;">
                             <path d="M20.331 14.644l-13.794-13.831 17.55 10.075zM2.938 0c-0.813 0.425-1.356 1.2-1.356 2.206v27.581c0 1.006 0.544 1.781 1.356 2.206l16.038-16zM29.512 14.1l-3.681-2.131-4.106 4.031 4.106 4.031 3.756-2.131c1.125-0.893 1.125-2.906-0.075-3.8zM6.538 31.188l17.55-10.075-3.756-3.756z"></path>
@@ -2645,14 +2852,17 @@
             container.innerHTML = htmlContent;
         }
 
-        document.addEventListener('DOMContentLoaded', renderLesson);
 
 
 
-        /* =========================================================
-           (Generate random star particles for CTA)
+
+
+        /*========================================================= 
+           UI Initializers & Effects (Clean Code)
            ========================================================= */
-        (function() {
+
+        /*(Generate random star particles for CTA)*/
+           function initCTAStars() {
             const container = document.getElementById('cta-stars');
             if (!container) return;
             for (let i = 0; i < 55; i++) {
@@ -2669,7 +2879,48 @@
                 `;
                 container.appendChild(star);
             }
-        })();
+        }
+
+        function initWebsiteButtonEffects() {
+            const btn = document.getElementById('websiteBtn');
+            if (!btn) return;
+
+            btn.addEventListener('click', function(e) {
+                const colors = ['#ff6600','#ff8c00','#ffb347','#c97be8','#ff4d00','#fff'];
+                const count = 20;
+                
+                // Fallback to button center if click coordinates are missing
+                const rect = btn.getBoundingClientRect();
+                const cx = e.clientX || (rect.left + rect.width / 2);
+                const cy = e.clientY || (rect.top + rect.height / 2);
+
+                for (let i = 0; i < count; i++) {
+                    const p = document.createElement('div');
+                    p.className = 'cta-particle';
+                    const angle = (Math.PI * 2 / count) * i;
+                    const dist = 60 + Math.random() * 80;
+                    const tx = Math.cos(angle) * dist;
+                    const ty = Math.sin(angle) * dist;
+                    const size = 5 + Math.random() * 6;
+                    p.style.cssText = `
+                        left:${cx}px; top:${cy}px;
+                        width:${size}px; height:${size}px;
+                        background:${colors[i % colors.length]};
+                        --tx:${tx}px; --ty:${ty}px;
+                        box-shadow: 0 0 6px ${colors[i % colors.length]};
+                    `;
+                    document.body.appendChild(p);
+                    setTimeout(() => p.remove(), 900);
+                }
+            });
+        }
+
+        // Initialize everything cleanly when DOM is fully loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            renderLesson();
+            initCTAStars();
+            initWebsiteButtonEffects();
+        });
 
     </script>
 </body>
