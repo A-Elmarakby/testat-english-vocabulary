@@ -81,6 +81,20 @@
             --syn-ant-ar-size: 17px;
             /* Arabic text inside the box */
 
+            /* Section Headers */
+            --section-en-size: 20px;
+            /* English title font size */
+            --section-ar-size: 18px;
+            /* Arabic title font size */
+            --section-ar-color: #ffffff;
+            /* Arabic title color */
+            --section-badge-size: 12px;
+            /* Word count badge font size */
+            --section-badge-bg: var(--brand-orange);
+            /* Word count badge background color */
+            --play-btn-size: 13px;
+            /* استمع للكل button font size */
+
             /* --- BOX COLORS --- */
             --card-bg: #ffffff;
             /* White background for main cards */
@@ -447,12 +461,12 @@
             padding: 15px 20px;
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: baseline;
             border-bottom: 3px solid var(--brand-orange);
         }
 
         .en-title {
-            font-size: 18px;
+            font-size: var(--section-en-size);
             font-weight: bold;
         }
 
@@ -634,15 +648,13 @@
 
         /* Word Counter */
         .word-count-badge {
-            font-size: 12px;
-            background: rgba(255, 255, 255, 0.2);
+            font-size: var(--section-badge-size);
+            background: var(--section-badge-bg);
             color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 20px;
             padding: 3px 10px;
-            margin-top: 5px;
             display: inline-block;
-
+            white-space: nowrap;
         }
 
 
@@ -652,24 +664,20 @@
         /* =========================================================
            (Play All & Row Highlights)
            ========================================================= */
-        .section-header-titles {
+        /* Section header: [en-title + badge] | [ar-title] | [play-btn] */
+        .section-header-left {
             display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: space-between;
-            flex: 1;
-            margin-right: 15px;
-        }
-
-        .titles-en {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
+            align-items: baseline;
+            gap: 10px;
+            flex-shrink: 0;
         }
 
         .section-header .ar-title {
-            color: #f0e6f5;
-            font-size: 15px;
+            flex: 1;
+            text-align: right;
+            color: var(--section-ar-color);
+            font-size: var(--section-ar-size);
+            padding: 0 15px;
         }
 
         .play-all-btn {
@@ -681,7 +689,7 @@
             cursor: pointer;
             font-family: var(--main-font);
             font-weight: bold;
-            font-size: 14px;
+            font-size: var(--play-btn-size);
             display: flex;
             align-items: center;
             gap: 8px;
@@ -2152,16 +2160,29 @@
             }
 
             .section-header {
-                flex-direction: column;
-                gap: 12px;
-                text-align: center;
+                flex-wrap: wrap;
+                gap: 8px;
+                padding: 12px 16px;
                 align-items: center;
             }
 
-            .section-header-titles {
-                flex-direction: column;
-                align-items: center;
-                margin-right: 0;
+            /* Left group expands, Arabic shrinks to its text */
+            .section-header .section-header-left {
+                flex: 1;
+                min-width: 0;
+            }
+
+            .section-header .ar-title {
+                flex: 0 1 auto;
+                padding: 0;
+            }
+
+            /* Button fills its own row below */
+            .section-header .play-all-btn {
+                flex-basis: 100%;
+                justify-content: center;
+                padding: 11px 15px;
+                font-size: 15px;
             }
 
             .def-top-floor,
@@ -3202,13 +3223,11 @@
                 htmlContent += `
                     <div class="section-card" style="margin-bottom: 50px;">
                         <div class="section-header">
-                            <div class="section-header-titles">
-                                <div class="titles-en">
-                                    <div class="en-title">${section.sectionTitleEn}</div>
-                                    <div class="word-count-badge">${section.words.length} words</div>
-                                </div>
-                                <div class="ar-title">${section.sectionTitleAr}</div>
+                            <div class="section-header-left">
+                                <div class="en-title">${section.sectionTitleEn}</div>
+                                <div class="word-count-badge">${section.words.length} words</div>
                             </div>
+                            <div class="ar-title">${section.sectionTitleAr}</div>
                             <button class="play-all-btn" onclick="playSection(${sectionIndex}, this)">
                                 <svg style="width: 12px; height: 12px; fill: currentColor;"><use href="#icon-play"></use></svg> استمع للكل
                             </button>
