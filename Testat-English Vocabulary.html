@@ -190,7 +190,6 @@
             left: 0;
             height: 3px;
             width: 0%;
-            min-width: 40px;
             background: var(--brand-orange);
             transition: width 0.1s linear;
             border-radius: 0 2px 2px 0;
@@ -3509,12 +3508,17 @@
 
             bar.classList.add('anim-shimmer');
 
+            // Min visible width in px — bar starts here and grows up from it
+            const minPercent = (40 / (bar.parentElement.offsetWidth || window.innerWidth)) * 100;
+
             window.addEventListener('scroll', () => {
                 const scrollTop = window.scrollY || document.documentElement.scrollTop;
                 const docHeight = document.documentElement.scrollHeight - window.innerHeight;
                 const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
 
-                bar.style.width = progress + '%';
+                // Remap progress [0→100] to visual width [minPercent→100] so bar moves from first scroll
+                const visualWidth = minPercent + (progress / 100) * (100 - minPercent);
+                bar.style.width = visualWidth + '%';
 
                 // Remove shimmer the first time user scrolls — never bring it back
                 if (progress > 1 && !hasScrolled) {
