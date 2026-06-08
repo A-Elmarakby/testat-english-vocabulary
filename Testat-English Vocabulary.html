@@ -2686,6 +2686,7 @@
          * APPLICATION STATE & DATA
          */
         let currentSpeechRate = 1.0;
+        let sharedAudioCtx = null;
 
 
         // Structured JSON data for the lesson
@@ -3441,10 +3442,11 @@
             }
         }
 
-        // Happy C-major arpeggio chime using Web Audio API
+        // Happy C-major arpeggio chime — uses the shared AudioContext (unlocked by first click)
         function playSuccessSound() {
-            try {
-                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+            if (!sharedAudioCtx) return;
+            const ctx = sharedAudioCtx;
+            (ctx.state === 'suspended' ? ctx.resume() : Promise.resolve()).then(() => {
                 [523, 659, 784, 1047].forEach((freq, i) => {
                     const osc  = ctx.createOscillator();
                     const gain = ctx.createGain();
@@ -3458,7 +3460,7 @@
                     osc.start(t);
                     osc.stop(t + 0.55);
                 });
-            } catch (e) {}
+            });
         }
 
         // Wiggle the header logo with a green glow
@@ -3527,6 +3529,16 @@
                 }
             }, { passive: true });
         }
+
+        // First click: unlock Web Audio API + prime TTS engine (fixes both audio issues)
+        document.addEventListener('click', function onFirstInteraction() {
+            try { sharedAudioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) {}
+            if ('speechSynthesis' in window) {
+                const u = new SpeechSynthesisUtterance('');
+                u.volume = 0;
+                window.speechSynthesis.speak(u);
+            }
+        }, { once: true });
 
         // Initialize everything cleanly when DOM is fully loaded
         document.addEventListener('DOMContentLoaded', () => {
