@@ -462,6 +462,7 @@
             display: flex;
             justify-content: space-between;
             align-items: baseline;
+            gap: 10px;
             border-bottom: 3px solid var(--brand-orange);
         }
 
@@ -649,8 +650,9 @@
         /* Word Counter */
         .word-count-badge {
             font-size: var(--section-badge-size);
-            background: var(--section-badge-bg);
+            background: transparent;
             color: #ffffff;
+            border: 1.5px solid rgba(255, 255, 255, 0.7);
             border-radius: 20px;
             padding: 3px 10px;
             display: inline-block;
@@ -664,13 +666,7 @@
         /* =========================================================
            (Play All & Row Highlights)
            ========================================================= */
-        /* Section header: [en-title + badge] | [ar-title] | [play-btn] */
-        .section-header-left {
-            display: flex;
-            align-items: baseline;
-            gap: 10px;
-            flex-shrink: 0;
-        }
+        /* Section header: [en-title] [badge] [ar-title fills] [play-btn] — all direct flex children */
 
         .section-header .ar-title {
             flex: 1;
@@ -2159,30 +2155,48 @@
                 border-bottom: 1px solid var(--border-color);
             }
 
-            /* Section header: 3 clean rows on mobile */
+            /* Section header: 2-row grid on mobile — each item stays in its cell */
+            /* Flex-wrap layout — row 1: en+ar titles, row 2: badge+button */
             .section-header {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 6px;
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                gap: 10px 6px;
                 padding: 12px 16px;
             }
 
-            .section-header .section-header-left {
-                flex: none;
-                min-width: auto;
+            /* Row 1 left — min-width forces row 1 to always be full, badge can't join */
+            .section-header .en-title {
+                flex: 1 1 40%;
+                min-width: calc(50% - 3px);
+                order: 1;
             }
 
+            /* Row 1 right */
             .section-header .ar-title {
-                flex: none;
-                padding: 0;
+                flex: 1 1 40%;
+                min-width: calc(50% - 3px);
                 text-align: right;
+                padding: 0;
+                order: 2;
             }
 
-            /* Play button full width */
+            /* Row 2 right — badge stays its natural small size */
+            .section-header .word-count-badge {
+                flex: 0 0 auto;
+                order: 3;
+                background: transparent;
+                border: 1.5px solid rgba(255, 255, 255, 0.7);
+                color: #ffffff;
+            }
+
+            /* Row 2 left — button fills all remaining space */
             .section-header .play-all-btn {
-                width: 100%;
+                flex: 1 0 auto;
                 justify-content: center;
-                padding: 11px 15px;
+                white-space: nowrap;
+                order: 4;
+                padding: 7px 15px;
                 font-size: 15px;
             }
 
@@ -3224,10 +3238,8 @@
                 htmlContent += `
                     <div class="section-card" style="margin-bottom: 50px;">
                         <div class="section-header">
-                            <div class="section-header-left">
-                                <div class="en-title">${section.sectionTitleEn}</div>
-                                <div class="word-count-badge">${section.words.length} words</div>
-                            </div>
+                            <div class="en-title">${section.sectionTitleEn}</div>
+                            <div class="word-count-badge">${section.words.length} words</div>
                             <div class="ar-title">${section.sectionTitleAr}</div>
                             <button class="play-all-btn" onclick="playSection(${sectionIndex}, this)">
                                 <svg style="width: 12px; height: 12px; fill: currentColor;"><use href="#icon-play"></use></svg> استمع للكل
