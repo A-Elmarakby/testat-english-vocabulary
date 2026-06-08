@@ -330,8 +330,7 @@
             transition: all 0.3s ease;
             box-shadow: 0 4px 10px rgba(211, 47, 47, 0.3);
             white-space: nowrap;
-            margin: 0 auto;
-            /* Center button on PC */
+            flex-shrink: 0;
         }
 
         .global-stop-btn:hover {
@@ -2344,18 +2343,18 @@
                 </div>
             </div>
 
-            <button id="global-stop-btn" class="global-stop-btn" onclick="globalStop()" style="display: none;">
-                <svg style="width: 14px; height: 14px; fill: currentColor;">
-                    <use href="#icon-stop"></use>
-                </svg> إيقاف
-            </button>
-
             <div class="search-box">
                 <svg class="search-icon-svg">
                     <use href="#icon-search"></use>
                 </svg>
                 <input type="text" id="searchInput" placeholder="Search words..." onkeyup="filterWords()">
             </div>
+
+            <button id="global-stop-btn" class="global-stop-btn" onclick="globalStop()" style="display: none;">
+                <svg style="width: 14px; height: 14px; fill: currentColor;">
+                    <use href="#icon-stop"></use>
+                </svg> إيقاف
+            </button>
 
         </div>
 
