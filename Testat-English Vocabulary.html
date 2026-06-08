@@ -193,6 +193,58 @@
             background: var(--brand-orange);
             transition: width 0.1s linear;
             border-radius: 0 2px 2px 0;
+            z-index: 2;
+        }
+
+        /* Shimmer animation — plays while bar is at idle (not yet scrolled) */
+        #scroll-progress-bar.anim-shimmer {
+            min-width: 40px;
+            overflow: hidden;
+        }
+        #scroll-progress-bar.anim-shimmer::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.75), transparent);
+            animation: idleShimmer 1.8s ease-in-out infinite;
+        }
+        @keyframes idleShimmer {
+            0%   { transform: translateX(-150%); }
+            100% { transform: translateX(500%); }
+        }
+
+        /* Celebration: gradient sweep + height pulse when bar reaches 100% */
+        #scroll-progress-bar.bar-complete {
+            background: linear-gradient(90deg, var(--brand-purple), var(--brand-orange), #ffd700, var(--brand-orange), var(--brand-purple));
+            background-size: 300% 100%;
+            animation: celebrationSlide 0.6s ease forwards, celebrationPulse 0.25s ease 0.6s 5 alternate;
+            box-shadow: 0 0 10px rgba(255, 102, 0, 0.9);
+            transition: none;
+        }
+        @keyframes celebrationSlide {
+            0%   { background-position: 100% 0; box-shadow: 0 0 4px rgba(255, 102, 0, 0.4); }
+            100% { background-position: 0% 0;   box-shadow: 0 0 20px rgba(255, 215, 0, 1); }
+        }
+        @keyframes celebrationPulse {
+            from { height: 3px; box-shadow: 0 0 10px rgba(255, 215, 0, 0.6); }
+            to   { height: 5px; box-shadow: 0 0 24px rgba(255, 215, 0, 1); }
+        }
+
+        /* Confetti dots that fly up from the progress bar on celebration */
+        .confetti-dot {
+            position: absolute;
+            bottom: 4px;
+            width: 5px;
+            height: 5px;
+            border-radius: 2px;
+            pointer-events: none;
+            z-index: 10;
+            animation: confettiFly var(--fly-duration, 1s) ease-out forwards;
+        }
+        @keyframes confettiFly {
+            0%   { transform: translateY(0)     rotate(0deg)   scale(1);   opacity: 1; }
+            60%  { opacity: 1; }
+            100% { transform: translateY(-60px) rotate(400deg) scale(0.2); opacity: 0; }
         }
 
         .header-logo img {
@@ -3371,15 +3423,57 @@
             }
         }
 
-        // Update reading progress bar width based on scroll position
+        // Play a gold gradient burst + confetti when bar hits 100%
+        function triggerProgressCelebration(bar) {
+            bar.classList.add('bar-complete');
+            spawnBarConfetti();
+            setTimeout(() => bar.classList.remove('bar-complete'), 3500);
+        }
+
+        // Spawn small colored dots that fly up from the progress bar
+        function spawnBarConfetti() {
+            const header = document.querySelector('.main-header');
+            const colors = ['#ff6600', '#5c007a', '#ffd700', '#ff3399', '#a855f7', '#00ccff'];
+            for (let i = 0; i < 36; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'confetti-dot';
+                dot.style.left = (2 + Math.random() * 96) + '%';
+                dot.style.background = colors[i % colors.length];
+                dot.style.animationDelay = (Math.random() * 0.5) + 's';
+                dot.style.setProperty('--fly-duration', (0.7 + Math.random() * 0.7).toFixed(2) + 's');
+                header.appendChild(dot);
+                dot.addEventListener('animationend', () => dot.remove());
+            }
+        }
+
+        // Track scroll position and update progress bar
         function initScrollProgress() {
             const bar = document.getElementById('scroll-progress-bar');
             if (!bar) return;
+
+            let hasScrolled = false;
+            let celebrated = false;
+
+            bar.classList.add('anim-shimmer');
+
             window.addEventListener('scroll', () => {
                 const scrollTop = window.scrollY || document.documentElement.scrollTop;
                 const docHeight = document.documentElement.scrollHeight - window.innerHeight;
                 const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+
                 bar.style.width = progress + '%';
+
+                // Remove shimmer the first time user scrolls — never bring it back
+                if (progress > 1 && !hasScrolled) {
+                    hasScrolled = true;
+                    bar.classList.remove('anim-shimmer');
+                }
+
+                // Fire celebration once when reaching the end of the page
+                if (progress >= 98 && !celebrated) {
+                    celebrated = true;
+                    triggerProgressCelebration(bar);
+                }
             }, { passive: true });
         }
 
