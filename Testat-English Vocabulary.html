@@ -175,11 +175,24 @@
             justify-content: space-between;
             align-items: center;
             padding: 15px 25px;
+            overflow: hidden;
             /* Fix sticky for iOS */
             position: -webkit-sticky;
             position: sticky;
             top: 0;
             z-index: 100;
+        }
+
+        /* Reading progress bar at the bottom of the header */
+        #scroll-progress-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            width: 0%;
+            background: var(--brand-orange);
+            transition: width 0.1s linear;
+            border-radius: 0 2px 2px 0;
         }
 
         .header-logo img {
@@ -2325,6 +2338,9 @@
         <div class="header-marketing" dir="rtl">
             <p>استمتع بتجربة تعليمية علمية متكاملة!</p>
         </div>
+
+        <!-- Reading progress bar — filled by JS on scroll -->
+        <div id="scroll-progress-bar"></div>
     </header>
 
     <main class="app-container" id="app-content">
@@ -3355,12 +3371,25 @@
             }
         }
 
+        // Update reading progress bar width based on scroll position
+        function initScrollProgress() {
+            const bar = document.getElementById('scroll-progress-bar');
+            if (!bar) return;
+            window.addEventListener('scroll', () => {
+                const scrollTop = window.scrollY || document.documentElement.scrollTop;
+                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+                bar.style.width = progress + '%';
+            }, { passive: true });
+        }
+
         // Initialize everything cleanly when DOM is fully loaded
         document.addEventListener('DOMContentLoaded', () => {
             renderLesson();
             initCTAStars();
             initWebsiteButtonEffects();
             cloneHeaderLogoToFooter();
+            initScrollProgress();
         });
 
     </script>
