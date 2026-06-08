@@ -140,6 +140,14 @@
             --audio-btn-color: var(--brand-purple);
             /* Icon color */
 
+            /* --- GRADIENTS --- */
+            --grad-purple: linear-gradient(135deg, var(--brand-dark), var(--brand-purple));
+            /* Dark-to-purple: used on cards, section headers, dark UI surfaces */
+            --grad-orange: linear-gradient(135deg, var(--brand-orange), #ff8533);
+            /* Orange-to-light-orange: used on action cards and play buttons */
+            --grad-deep-purple: linear-gradient(160deg, #1a0028, #2d0045);
+            /* Very dark purple: used for deep background surfaces like phone frame */
+
             /* --- SHAPES & BORDERS --- */
             --radius-small: 6px;
             /* Small border radius (number badge) */
@@ -352,7 +360,7 @@
         }
 
         .section-header {
-            background: var(--brand-purple);
+            background: var(--grad-purple);
             color: #ffffff;
             padding: 15px 20px;
             display: flex;
@@ -480,12 +488,12 @@
         }
 
         .unit-card {
-            background: linear-gradient(135deg, var(--brand-dark), var(--brand-purple));
+            background: var(--grad-purple);
             border-bottom: 4px solid var(--brand-orange);
         }
 
         .lesson-card {
-            background: linear-gradient(135deg, var(--brand-orange), #ff8533);
+            background: var(--grad-orange);
             border-bottom: 4px solid var(--brand-purple);
 
         }
@@ -1482,7 +1490,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, #4e1a6a, #341145);
+            background: var(--grad-purple);
         }
 
         .cta-social-proof .avatars span:first-child {
@@ -1599,7 +1607,7 @@
         .cta-phone-frame {
             width: 230px;
             height: 460px;
-            background: linear-gradient(160deg, #1a0028, #2d0045);
+            background: var(--grad-deep-purple);
             border-radius: 40px;
             padding: 12px;
             border: 1.5px solid rgba(255, 255, 255, 0.12);
@@ -1723,7 +1731,7 @@
         }
 
         .cta-app-play-btn {
-            background: linear-gradient(135deg, #ff6600, #ff8533);
+            background: var(--grad-orange);
             color: #fff;
             font-size: 9px;
             font-weight: 700;
