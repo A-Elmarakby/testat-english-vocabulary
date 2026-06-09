@@ -81,6 +81,12 @@
             --syn-ant-ar-size: 17px;
             /* Arabic text inside the box */
 
+            /* Logo */
+            --logo-header-size: 40px;
+            /* Header logo height */
+            --logo-footer-size: 30px;
+            /* Footer logo height */
+
             /* Section Headers */
             --section-en-size: 20px;
             /* English title font size */
@@ -279,7 +285,7 @@
         }
 
         .header-logo img {
-            max-height: 45px;
+            max-height: var(--logo-header-size);
         }
 
         .header-marketing {
@@ -1942,7 +1948,7 @@
 
         /* Footer Logo Set a good logo size for the footer. */
         #footer-logo-link img {
-            max-height: 22px;
+            max-height: var(--logo-footer-size);
             display: block;
         }
 
