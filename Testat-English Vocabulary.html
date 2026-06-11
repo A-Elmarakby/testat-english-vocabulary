@@ -554,11 +554,57 @@
             font-weight: 600;
         }
 
+        /* Breathing space between the Arabic text and the English column */
+        .vocab-row > .ar-text {
+            margin-left: 15px;
+        }
+
         .word-audio-wrapper {
             display: flex;
             align-items: center;
             justify-content: space-between;
             width: 160px;
+        }
+
+        /* Protect the fixed English column: long Arabic text wraps
+           in its own area instead of squeezing the icon space.
+           nowrap = the icon can never drop to its own flex line */
+        .vocab-row > .word-audio-wrapper {
+            flex-shrink: 0;
+            flex-wrap: nowrap;
+        }
+
+        /* Measuring mode: used by JS for one frame to check if the word
+           is wider than the fixed space next to the icon */
+        .vocab-row > .word-audio-wrapper.icon-measure {
+            flex-wrap: nowrap;
+        }
+
+        .vocab-row > .word-audio-wrapper.icon-measure .en-text {
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        /* Long-word mode: JS adds this class only when the word
+           exceeds the fixed width, so the icon trails the word end */
+        .vocab-row > .word-audio-wrapper.icon-inline {
+            display: block;
+            width: auto;
+            /* Free the long word from the 160px cage */
+            max-width: 55%;
+            /* But never crowd the Arabic side */
+        }
+
+        .vocab-row > .word-audio-wrapper.icon-inline .audio-btn {
+            display: inline-flex;
+            vertical-align: middle;
+            margin-inline-start: 8px;
+        }
+
+        /* Glue span: keeps the last word and the icon together,
+           so the icon never drops to a new line alone */
+        .icon-glue {
+            white-space: nowrap;
         }
 
         /* Shared Audio Button Styles */
@@ -3625,9 +3671,66 @@
             }
         }, { once: true });
 
+        // Merge the audio icon into the word end ONLY when the word
+        // is wider than its fixed space. Short words keep the fixed icon column.
+        function mergeIconForLongWords() {
+            const wrappers = document.querySelectorAll('.vocab-row > .word-audio-wrapper');
+
+            // Phase 0: undo any previous merge (restore text + button position)
+            wrappers.forEach(w => {
+                if (!w.classList.contains('icon-inline')) return;
+                const text = w.querySelector('.en-text');
+                const btn = w.querySelector('.audio-btn');
+                if (!text || !btn) return;
+                text.textContent = text.dataset.fullWord || text.textContent;
+                w.appendChild(btn);
+                w.classList.remove('icon-inline');
+            });
+
+            // Phase 1: switch all wrappers to measuring mode
+            wrappers.forEach(w => w.classList.add('icon-measure'));
+
+            // Phase 2: read all measurements in one pass (avoids layout thrashing)
+            const longOnes = [];
+            wrappers.forEach(w => {
+                const text = w.querySelector('.en-text');
+                if (text && text.scrollWidth > text.clientWidth) longOnes.push(w);
+            });
+
+            // Phase 3: clean up, then glue the icon to the LAST word,
+            // so the icon can never drop to a new line alone
+            wrappers.forEach(w => w.classList.remove('icon-measure'));
+            longOnes.forEach(w => {
+                const text = w.querySelector('.en-text');
+                const btn = w.querySelector('.audio-btn');
+                if (!text || !btn) return;
+                text.dataset.fullWord = text.textContent;
+
+                const words = text.textContent.trim().split(/\s+/);
+                const lastWord = words.pop();
+                text.textContent = words.length ? words.join(' ') + ' ' : '';
+
+                const glue = document.createElement('span');
+                glue.className = 'icon-glue';
+                glue.textContent = lastWord;
+                glue.appendChild(btn);
+                text.appendChild(glue);
+
+                w.classList.add('icon-inline');
+            });
+        }
+
+        // Re-check word widths when the screen size changes (debounced)
+        let iconResizeTimer = null;
+        window.addEventListener('resize', () => {
+            clearTimeout(iconResizeTimer);
+            iconResizeTimer = setTimeout(mergeIconForLongWords, 150);
+        });
+
         // Initialize everything cleanly when DOM is fully loaded
         document.addEventListener('DOMContentLoaded', () => {
             renderLesson();
+            mergeIconForLongWords();
             initCTAStars();
             initWebsiteButtonEffects();
             cloneHeaderLogoToFooter();
