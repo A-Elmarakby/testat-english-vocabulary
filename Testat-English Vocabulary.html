@@ -66,8 +66,12 @@
             /* Definition Cards */
             --def-word-size: 19px;
             /* Main English word size */
+            --def-word-color: #000000;
+            /* Main English word color */
             --def-trans-size: 16px;
             /* Arabic translation size next to the word */
+            --def-trans-color: #000000;
+            /* Arabic translation color next to the word */
             --def-en-size: 16px;
             /* English definition text size */
             --def-ar-size: 15px;
@@ -96,8 +100,8 @@
             /* Arabic title color */
             --section-badge-size: 12px;
             /* Word count badge font size */
-            --section-badge-bg: var(--brand-orange);
-            /* Word count badge background color */
+            --section-badge-border: rgba(255, 255, 255, 0.7);
+            /* Word count badge outline color */
             --play-btn-size: 13px;
             /* Play-all button font size */
 
@@ -519,6 +523,7 @@
             transition: background-color 0.2s ease, transform 0.1s ease;
             scroll-margin-top: 150px;
             /* Auto-scroll padding to avoid sticky header overlap */
+            cursor: pointer;
         }
 
         .vocab-row:last-child {
@@ -564,6 +569,8 @@
             align-items: center;
             justify-content: space-between;
             width: 160px;
+            pointer-events: none;
+            /* Allows the row click to trigger correctly */
         }
 
         /* Protect the fixed English column: long Arabic text wraps
@@ -725,7 +732,7 @@
             font-size: var(--section-badge-size);
             background: transparent;
             color: #ffffff;
-            border: 1.5px solid rgba(255, 255, 255, 0.7);
+            border: 1.5px solid var(--section-badge-border);
             border-radius: 20px;
             padding: 3px 10px;
             display: inline-block;
@@ -772,17 +779,8 @@
         }
 
         /* Make rows fully clickable with visual feedback */
-        .vocab-row {
-            cursor: pointer;
-        }
-
         .vocab-row:active {
             transform: scale(0.99);
-        }
-
-        .word-audio-wrapper {
-            pointer-events: none;
-            /* Allows the row click to trigger correctly */
         }
 
         /* Active highlight for playing words */
@@ -872,7 +870,8 @@
             flex: 1;
         }
 
-        .word-audio-wrapper {
+        /* Scoped to definition cards only — must not leak to standard rows */
+        .def-top-floor .word-audio-wrapper {
             display: flex;
             align-items: center;
             gap: 10px;
@@ -2259,7 +2258,7 @@
                 flex: 0 0 auto;
                 order: 3;
                 background: transparent;
-                border: 1.5px solid rgba(255, 255, 255, 0.7);
+                border: 1.5px solid var(--section-badge-border);
                 color: #ffffff;
             }
 
@@ -3207,7 +3206,7 @@
 
                     utterance.onend = () => {
                         if (rowEl) {
-                            // مسح كل أنواع الإضاءة لتنظيف الكارت
+                            // Clear all highlight types to clean the card
                             rowEl.classList.remove('playing-highlight', 'verb-playing-highlight');
                         }
                         currentWordIndex++;
