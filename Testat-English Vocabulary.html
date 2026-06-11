@@ -104,10 +104,22 @@
             /* --- BOX COLORS --- */
             --card-bg: #ffffff;
             /* White background for main cards */
-            --def-card-bg-even: #ffffff;
-            /* Even row background */
-            --def-card-bg-odd: #ffffff;
-            /* Odd row background */
+
+            /* ============================================================
+               ZEBRA STRIPING — Row & Card Colors
+               Group A = standard vocab (Key / Additional / Expressions)
+               Group B = detail cards (Definitions / Syn-Ant / Verbs)
+               ============================================================ */
+
+            /* Group A — two alternating row colors + hover */
+            --vocab-row-even:  #f5f3f8;
+            --vocab-row-odd:   #ffffff;
+            --vocab-row-hover: #ede5f5;
+
+            /* Group B — two alternating card colors + card background */
+            --detail-card-even: #ffffff;
+            --detail-card-odd:  #ffffff;
+            --detail-card-bg:   #f5f5f5;
 
             /* Definition Box (Bottom Section) */
             --def-box-bg: #f8f5fb;
@@ -457,6 +469,11 @@
             transition: transform 0.3s ease;
         }
 
+        /* Group B sections get their own background (shows in the gaps between cards) */
+        .section-card.section-card--detail {
+            background: var(--detail-card-bg);
+        }
+
         .section-card:hover {
             transform: translateY(-3px);
         }
@@ -508,14 +525,18 @@
             border-bottom: none;
         }
 
-        /* Zebra Striping */
+        /* Zebra Striping — Group A (standard vocab) */
         .vocab-col .vocab-row:nth-child(even) {
-            background-color: var(--row-even);
+            background-color: var(--vocab-row-even);
+        }
+
+        .vocab-col .vocab-row:nth-child(odd) {
+            background-color: var(--vocab-row-odd);
         }
 
         /* Row Hover Effect */
         .vocab-col .vocab-row:hover {
-            background-color: var(--row-hover);
+            background-color: var(--vocab-row-hover);
         }
 
         /* * TYPOGRAPHY & AUDIO BUTTON */
@@ -753,13 +774,13 @@
             gap: 16px;
         }
 
-        /* Card styles */
+        /* Card styles — Group B zebra (definitions / syn-ant) */
         .vocab-col .vocab-row.def-row-wrapper:nth-child(even) {
-            background-color: var(--def-card-bg-even);
+            background-color: var(--detail-card-even);
         }
 
         .vocab-col .vocab-row.def-row-wrapper:nth-child(odd) {
-            background-color: var(--def-card-bg-odd);
+            background-color: var(--detail-card-odd);
         }
 
         .vocab-row.def-row-wrapper {
@@ -1035,11 +1056,11 @@
         }
 
         .vocab-col .verb-card:nth-child(even) {
-            background-color: var(--def-card-bg-even);
+            background-color: var(--detail-card-even);
         }
 
         .vocab-col .verb-card:nth-child(odd) {
-            background-color: var(--def-card-bg-odd);
+            background-color: var(--detail-card-odd);
         }
 
         .verb-card:hover {
@@ -3241,8 +3262,11 @@
             let htmlContent = '';
 
             lessonData.forEach((section, sectionIndex) => {
+                // Detect detail sections (definitions / syn-ant / verbs) to give them their own background
+                const w0 = section.words[0];
+                const isDetail = !!(w0 && (w0.enDef || w0.synEn || w0.v1));
                 htmlContent += `
-                    <div class="section-card" style="margin-bottom: 50px;">
+                    <div class="section-card${isDetail ? ' section-card--detail' : ''}" style="margin-bottom: 50px;">
                         <div class="section-header">
                             <div class="en-title">${section.sectionTitleEn}</div>
                             <div class="word-count-badge">${section.words.length} words</div>
