@@ -773,9 +773,20 @@
             box-shadow: 0 4px 10px rgba(255, 102, 0, 0.3);
         }
 
-        .play-all-btn:hover {
-            transform: scale(1.05);
-            background: #e65c00;
+        /* Hover effect only on devices with a real mouse pointer,
+           so it can never stick (and overlap the badge) on touch screens */
+        @media (hover: hover) {
+            .play-all-btn:hover {
+                transform: scale(1.05);
+                background: #e65c00;
+            }
+        }
+
+        /* Press feedback on tap/click: quick shrink, smooth spring back.
+           Works on touch too and never sticks */
+        .play-all-btn:active {
+            transform: scale(0.96);
+            transition: transform 0.08s ease;
         }
 
         /* Make rows fully clickable with visual feedback */
